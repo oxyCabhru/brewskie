@@ -215,7 +215,7 @@ export type CaskInstalls = {
     total_count: number;
     items: {
         number: number;
-        cask: string;
+        formula: string;
         count: string;
         percent: string;
     }[]
