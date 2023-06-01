@@ -215,7 +215,7 @@ export type CaskInstalls = {
     total_count: number;
     items: {
         number: number;
-        formula: string;
+        cask: string;
         count: string;
         percent: string;
     }[]
@@ -233,6 +233,11 @@ export type FormulaInstalls = {
         count: string;
         percent: string;
     }[]
+}
+
+export type Brew = {
+  token: string,
+  type: "cask" | "formula"
 }
 
 export type UserChoices = {
