@@ -2,7 +2,7 @@
 	import { user_choice } from "$lib/store";
 	import { Download, ExternalLink } from "lucide-svelte";
 	import type { CaskApiResponse, FormulaApiResponse } from "$lib/types";
-	import millify from "millify";
+	// import millify from "millify";
     export let apps: {
         number: number,
         count: string,
@@ -70,7 +70,8 @@
                     <span
                         class="badge variant-filled-primary"
                     title="Downloads in the past 90 days">
-                    {millify(parseInt(cask.count))}
+                    <!-- {millify(parseInt(cask.count))} -->
+                    {parseInt(cask.count)}
                     <Download style="display: inline" size={18} />
                 </span>
                 </div>
@@ -85,7 +86,8 @@
                     <span
                                 class="badge variant-filled-primary"
                         title="Downloads in the past 30 days">
-                        {millify(parseInt(api_response.analytics.install["30d"][api_response.token]))}
+                        <!-- {millify(parseInt(api_response.analytics.install["30d"][api_response.token]))} -->
+                        {parseInt(api_response.analytics.install["30d"][api_response.token])}
                         <Download style="display: inline" size={18} />
                     </span>
                 </div>
@@ -114,7 +116,8 @@
                 <span
                 class="badge variant-filled-primary"
                 title="Downloads in the past 90 days">
-                {millify(parseInt(pkg.count))}
+                <!-- {millify(parseInt(pkg.count))} -->
+                {parseInt(pkg.count)}
                 <Download style="display: inline" size={18} />
             </span>
             </div>
@@ -129,7 +132,8 @@
                     <span
                         class="badge variant-filled-primary"
                         title="Downloads in the past 30 days">
-                        {millify(parseInt(formula.analytics.install_on_request["30d"][formula.name]))}
+                        <!-- {millify(parseInt(formula.analytics.install_on_request["30d"][formula.name]))} -->
+                        {parseInt(formula.analytics.install_on_request["30d"][formula.name])}
                         <Download style="display: inline" size={18} />
                     </span>
                 </div>
