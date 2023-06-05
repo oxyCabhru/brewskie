@@ -3,7 +3,9 @@ import type {
     CaskApiResponse,
     FormulaApiResponse,
     UserChoices } from "$lib/types";
+import About from "$lib/About.svelte";
 import { brew_fetch_cask, brew_fetch_formula } from "./brew_sh";
+import { type ModalSettings, modalStore } from "@skeletonlabs/skeleton";
 
 export async function cask_installs_to_api_response(ci: {
     cask: string,
@@ -37,6 +39,18 @@ export async function formula_installs_to_api_response(ci: {
 // api_res.sort((a, b) => b.analytics.install_on_request["365d"][b.name] - a.analytics.install_on_request["365d"][a.name]);
 return api_res;
 } 
+
+export function openAbout() {
+    const modal: ModalSettings = {
+        type: 'component',
+        component: {
+            ref: About,
+            props: {},
+            slot: "",
+        },
+    };
+    modalStore.trigger(modal);
+}
 
 export let user_choice: Writable<UserChoices> = writable({
     casks: [],

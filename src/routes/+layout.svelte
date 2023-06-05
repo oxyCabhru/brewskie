@@ -5,10 +5,36 @@
 	import '@skeletonlabs/skeleton/styles/skeleton.css';
 	// Most of your app wide CSS should be put in this file
 	import '../app.postcss';
-	import { AppShell, Toast } from '@skeletonlabs/skeleton';
-</script>
+	import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
+	import { AppShell, Toast, Modal, storePopup } from '@skeletonlabs/skeleton';
+	import { openAbout } from '$lib/store';
+	import { Info } from 'lucide-svelte';
 
+	storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
+			
+</script>
+<Modal />
 <AppShell>
 	<Toast buttonDismiss="hidden" background="variant-glass-secondary" />
+	<div class="header">
+		<h1>Brewskie! 🤙<br>Install apps and packages quickly and easily, powered by 
+			<a href="https://brew.sh" class="font-medium text-secondary-600 dark:text-secondary-500 hover:underline">
+				Homebrew.
+			</a>
+		</h1>
+		<button class="btn text-secondary-600 p-2" on:click={openAbout}>
+			<Info />
+		</button>
+	</div>
 	<slot />
 </AppShell>
+
+<style>
+	.header {
+		margin: 0.5rem;
+		display: flex;
+		flex-flow: row unwrap;
+		width: 100%;
+		justify-content:space-between;
+	}
+</style>

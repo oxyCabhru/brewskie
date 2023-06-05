@@ -1,14 +1,20 @@
 <script lang="ts">
     import { user_choice } from "$lib/store";
-	import { InputChip, Paginator, toastStore } from "@skeletonlabs/skeleton";
+	import { InputChip, Paginator, toastStore, type PopupSettings, Autocomplete, type AutocompleteOption, popup } from "@skeletonlabs/skeleton";
 	import type { PaginationSettings } from "@skeletonlabs/skeleton/dist/components/Paginator/types";
     import Brews from "$lib/Brews.svelte";
 	import type {PageData} from "./$types";
 	import { onMount } from "svelte";
 	import type { UserChoices } from "$lib/types";
 	import { FileDown } from "lucide-svelte";
-	import { prepare_brewfile } from "$lib/bundle";
 	export let data;
+    let raw_input: string;
+    let autocomp_options: AutocompleteOption[] = data.available_brews.map(brew => {
+        return {
+            label: brew.token,
+            value: brew.token,
+        } as AutocompleteOption
+    })
     let [current_apps, current_pkgs, current_stream] = [data.apps, data.packages, data.stream]
     let input_choices: string[] = [];
     $: input_choices = $user_choice.casks.concat($user_choice.packages);
@@ -26,6 +32,15 @@
             window.localStorage.setItem("casks", JSON.stringify(choices.casks));
             window.localStorage.setItem("formulae", JSON.stringify(choices.packages));
         });
+
+        const el: HTMLElement | null = document.querySelector('[class="input-chip-field unstyled bg-transparent border-0 !ring-0 p-0 w-full"]');
+        if (el) {
+            popup(el, {
+                event: 'focus-click',
+                target: 'autocomplete',
+                placement: 'bottom',
+            });
+        };
     })
     function removeChip(e: any) {
         user_choice.update(ch => {
@@ -36,10 +51,11 @@
     }
     function addChip(e: any) {
         user_choice.update(ch => {
-            const token = e.detail.chipValue;
+            const token = e.detail.chipValue || e.detail.value;
             if (ch.casks.includes(token) || ch.packages.includes(token)) {
                 ch.casks = ch.casks.filter(cask => cask != token);
                 ch.packages = ch.packages.filter(pkg => pkg != token);
+                raw_input = "";
                 return ch;
             }
             const dp = data.available_brews.find(brew => brew.token == token);
@@ -48,6 +64,7 @@
                 ch.casks.push(dp.token)
                 :
                 ch.packages.push(dp.token)
+            raw_input = "";
             return ch;
         })
     }
@@ -96,26 +113,27 @@
         URL.revokeObjectURL(url);
     }
 </script>
-
-<!-- <p>apps length {data.apps.length}</p>
-    <p>pkg length {data.packages.length}</p>
-    <p>pagination {$page.url.searchParams.get("p") || "0"}</p>
-    <p>ch: {input_choices}</p>
-    <p>{JSON.stringify($user_choice)}</p> -->
-    
     <main>
     <div class="controls card variant-glass-primary">
         <div class="brewfile">
             <InputChip
-            class={"variant-glass-surface"}
-            chips={"input-chips variant-filled"}
-            bind:value={input_choices}
-            placeholder={"Know a brew you want? Type it here and press Enter.."}
-            whitelist={data.available_brews.map(brew => brew.token)}
-            allowDuplicates={true}
-            on:remove={removeChip}
-            on:add={addChip}
-            name="inp" />
+                class={"variant-glass-surface"}
+                chips={"input-chips variant-filled"}
+                bind:input={raw_input}
+                bind:value={input_choices}
+                placeholder={"Know a brew you want? Type it here and press Enter.."}
+                whitelist={data.available_brews.map(brew => brew.token)}
+                allowDuplicates={true}
+                on:remove={removeChip}
+                on:add={addChip}
+                name="inp" />
+                <div data-popup="autocomplete" class="autocomplete card w-full h-32 overflow-y-auto">
+                    <Autocomplete
+                        bind:input={raw_input}
+                        options={autocomp_options}
+                        on:selection={addChip}
+                    />
+                </div>
             <button 
                 class={`btn ${(input_choices.length == 0) ? "variant-soft-secondary" : "variant-filled-primary"}`}
                 on:click={fetch_brewskie}>
@@ -148,6 +166,11 @@
         gap: .25rem;
         margin: .1rem .25rem;
     }
+    .autocomplete {
+        margin-top: .25rem;
+        width: 88%;
+        z-index: 1;
+    }
     .brewfile {
         display: grid;
         grid-template-columns: 8fr 1fr;
@@ -164,11 +187,13 @@
     :global(.paginator) {
         padding: .25rem 0;
         display: flex;
-        flex-flow: row nowrap;
-        /* width: fit-content; */
+        flex-flow: row nowrap !important;
+    }
+    :global(.paginator > *) {
+        margin-top: 0 !important;
     }
     :global(.paginator-label) {
-        width: min-content;
+        width: min-content !important;
     }
     :global(.input-chips) {
         display: none;
