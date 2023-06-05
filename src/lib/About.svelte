@@ -97,10 +97,6 @@
         overflow-y: auto;
         height: 70vh;
     }
-    .card-footer {
-        position: absolute;
-        bottom: 0;
-    }
     .card-footer > span {
         opacity: 40%;
     }
