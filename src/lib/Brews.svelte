@@ -79,19 +79,19 @@
                 {#if typeof api_response == "object"}
                 <div class="card-header">
                     <h1>{api_response.name[0]}
-                        <a href={api_response.homepage} target="_blank" title={api_response.name + " homepage as reported by brew.sh"}>
+                        <a class="homepage-link" href={api_response.homepage} target="_blank" title={api_response.name + " homepage as reported by brew.sh"}>
                             <ExternalLink style="display: inline" size={18}/>
                         </a>
                     </h1>
                     <span
-                                class="badge variant-filled-primary"
+                        class="badge variant-filled-primary"
                         title="Downloads in the past 30 days">
                         <!-- {millify(parseInt(api_response.analytics.install["30d"][api_response.token]))} -->
                         {parseInt(api_response.analytics.install["30d"][api_response.token])}
                         <Download style="display: inline" size={18} />
                     </span>
                 </div>
-                <p>{api_response.desc}</p>
+                <p class="brew-desc">{api_response.desc}</p>
                 {:else}
                 <span class="opacity-30">{api_response}</span>
                 {/if}
@@ -125,7 +125,7 @@
                 {#if typeof formula == "object"}
                 <div class="card-header">
                     <h1>{formula.name}
-                        <a href={formula.homepage} target="_blank" title={formula.name + " homepage as reported by brew.sh"}>
+                        <a class="homepage-link" href={formula.homepage} target="_blank" title={formula.name + " homepage as reported by brew.sh"}>
                             <ExternalLink style="display: inline" size={18}/>
                         </a>
                     </h1>
@@ -137,7 +137,7 @@
                         <Download style="display: inline" size={18} />
                     </span>
                 </div>
-                <p>{formula.desc}</p>
+                <p class="brew-desc">{formula.desc}</p>
                 {:else}
                 <span class="opacity-30">{formula}</span>
                 {/if}
@@ -149,9 +149,15 @@
 <style>
     .container {
 		display: grid;
-        grid-template-columns: 1fr 1fr;
-		gap: 2.5rem;
+        grid-template-columns: 1fr;
+		gap: .25rem;
 	}
+    @media only screen and (min-width: 1024px) {
+        .container {
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem
+        }
+    }
 	.card {
 		padding: .25rem;
 	}
@@ -161,6 +167,27 @@
         justify-content:space-between;
         margin-bottom: .5rem;
 	}
+    .card-header > span {
+        display: none;
+    }
+    .brew-desc {
+        display: none;
+    }
+    .homepage-link {
+        display: none;
+    }
+    @media only screen and (min-width: 1024px) {
+        .homepage-link {
+            display: unset;
+        }
+        .brew-desc {
+            display: unset;
+        }
+        .card-header > span {
+            display: unset;
+        }
+
+    }
     span {
         float: inline-end;
         height: fit-content;

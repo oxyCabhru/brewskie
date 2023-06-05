@@ -108,6 +108,7 @@
         <div class="brewfile">
             <InputChip
             class={"variant-glass-surface"}
+            chips={"input-chips variant-filled"}
             bind:value={input_choices}
             placeholder={"Know a brew you want? Type it here and press Enter.."}
             whitelist={data.available_brews.map(brew => brew.token)}
@@ -122,11 +123,10 @@
                 Done!
             </button>
         </div>
-        
         <Paginator
             class="variant-glass-primary paginator"
             bind:settings={pagination}
-            select="select min-w-[150px] variant-soft-surface"
+            select="select w-min variant-soft-surface"
             buttonClasses="btn-icon variant-filled-surface "
             justify="justify-around"
             amountText="Brews"
@@ -144,24 +144,49 @@
         display: grid;
         grid-template-areas: 
             "controls controls"
-            "casks pkgs"
             "casks pkgs";
-        gap: 2.5rem;
-        margin: 2.5rem 5rem;
+        gap: .25rem;
+        margin: .1rem .25rem;
     }
     .brewfile {
         display: grid;
         grid-template-columns: 8fr 1fr;
     }
     .controls {
-        top: 1rem;
+        top: 0;
         grid-area: controls;
         display: grid;
         position: sticky;
         width: 100%;
+        height: 6rem;
         z-index: 1;
     }
     :global(.paginator) {
         padding: .25rem 0;
+        display: flex;
+        flex-flow: row nowrap;
+        /* width: fit-content; */
+    }
+    :global(.paginator-label) {
+        width: min-content;
+    }
+    :global(.input-chips) {
+        display: none;
+    }
+    @media only screen and (min-width: 1024px) {
+        main {
+            grid-template-areas: 
+            "controls controls"
+            "casks pkgs"
+            "casks pkgs";
+            gap: 2.5rem;
+            margin: 2.5rem 5rem;
+        }
+        .controls {
+            top: 1rem;
+        }
+        :global(.input-chips) {
+            display: unset;
+        }
     }
 </style>
