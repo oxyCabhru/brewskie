@@ -5,10 +5,6 @@ import type {
     FormulaInstalls 
 } from "$lib/types";
 import {
-    cask_installs_to_api_response,
-    formula_installs_to_api_response,
-} from "$lib/store";
-import {
     axios
 } from "$lib/mount";
 
