@@ -32,8 +32,9 @@
 <style>
 	.header {
 		margin: 0.5rem;
+		padding: 0 0.5rem;
 		display: flex;
-		flex-flow: row unwrap;
+		flex-flow: row nowrap;
 		width: 100%;
 		justify-content:space-between;
 	}

@@ -92,6 +92,9 @@
 </div>
 
 <style>
+    .alert-message {
+        z-index: 1000;
+    }
     .card {
         position: relative;
         overflow-y: auto;
