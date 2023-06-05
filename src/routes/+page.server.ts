@@ -1,11 +1,10 @@
 import type { PageServerData } from "./$types";
 import { brew_fetch_cask, brew_fetch_formula, brew_fetch_popular_casks, brew_fetch_popular_formulae } from "$lib/brew_sh";
 import type { Brew } from "$lib/types";
-import { cask_installs_to_api_response, formula_installs_to_api_response } from "$lib/store";
 
 export async function load({ url }) {
     const pagination = parseInt(url.searchParams.get("p") || "0");
-    const amount = parseInt(url.searchParams.get("c") || "25")
+    const amount = parseInt(url.searchParams.get("c") || "50")
     let [cask_installs, pkg_installs] = await Promise.all([
         brew_fetch_popular_casks(), brew_fetch_popular_formulae()
     ]);
@@ -17,8 +16,8 @@ export async function load({ url }) {
         ...pkg_installs.items.map(brew => {
             return {token: brew.formula, type: "formula"} as Brew
         })];
-    const apps = cask_installs.items.slice(pagination * amount, pagination * amount + amount);
-    const packages = pkg_installs.items.slice(pagination * amount, pagination * amount + amount);
+    const apps = cask_installs.items.slice(pagination * (amount / 2), pagination * (amount / 2) + (amount / 2));
+    const packages = pkg_installs.items.slice(pagination * (amount / 2), pagination * (amount / 2) + (amount / 2));
     
     return {
         pagination,

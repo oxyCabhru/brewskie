@@ -2,7 +2,7 @@
 	import { user_choice } from "$lib/store";
 	import { Download, ExternalLink } from "lucide-svelte";
 	import type { CaskApiResponse, FormulaApiResponse } from "$lib/types";
-	import { ProgressBar } from "@skeletonlabs/skeleton";
+	import millify from "millify";
     export let apps: {
         number: number,
         count: string,
@@ -68,10 +68,9 @@
                     <h1>{cask.cask}
                     </h1>
                     <span
-                    style="float: inline-end;"
-                    class="badge variant-filled-primary"
+                        class="badge variant-filled-primary"
                     title="Downloads in the past 90 days">
-                    {cask.count}
+                    {millify(parseInt(cask.count))}
                     <Download style="display: inline" size={18} />
                 </span>
                 </div>
@@ -84,10 +83,9 @@
                         </a>
                     </h1>
                     <span
-                        style="float: inline-end;"
-                        class="badge variant-filled-primary"
+                                class="badge variant-filled-primary"
                         title="Downloads in the past 30 days">
-                        {api_response.analytics.install["30d"][api_response.token]}
+                        {millify(parseInt(api_response.analytics.install["30d"][api_response.token]))}
                         <Download style="display: inline" size={18} />
                     </span>
                 </div>
@@ -114,10 +112,9 @@
             <div class="card-header">
                 <h1>{pkg.formula}</h1>
                 <span
-                style="float: inline-end;"
                 class="badge variant-filled-primary"
                 title="Downloads in the past 90 days">
-                {pkg.count}
+                {millify(parseInt(pkg.count))}
                 <Download style="display: inline" size={18} />
             </span>
             </div>
@@ -130,10 +127,9 @@
                         </a>
                     </h1>
                     <span
-                        style="float: inline-end;"
                         class="badge variant-filled-primary"
                         title="Downloads in the past 30 days">
-                        {formula.analytics.install_on_request["30d"][formula.name]}
+                        {millify(parseInt(formula.analytics.install_on_request["30d"][formula.name]))}
                         <Download style="display: inline" size={18} />
                     </span>
                 </div>
@@ -151,7 +147,6 @@
 		display: grid;
         grid-template-columns: 1fr 1fr;
 		gap: 2.5rem;
-		margin: 1rem 2rem;
 	}
 	.card {
 		padding: .25rem;
@@ -162,4 +157,8 @@
         justify-content:space-between;
         margin-bottom: .5rem;
 	}
+    span {
+        float: inline-end;
+        height: fit-content;
+    }
 </style>

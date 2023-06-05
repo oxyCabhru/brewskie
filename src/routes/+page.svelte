@@ -1,13 +1,32 @@
 <script lang="ts">
     import { user_choice } from "$lib/store";
-	import { InputChip, Paginator } from "@skeletonlabs/skeleton";
-	import type {PageData} from "./$types";
-	export let data;
-    import { page } from "$app/stores";
+	import { InputChip, Paginator, toastStore } from "@skeletonlabs/skeleton";
 	import type { PaginationSettings } from "@skeletonlabs/skeleton/dist/components/Paginator/types";
-	import Brews from "$lib/Brews.svelte";
+    import Brews from "$lib/Brews.svelte";
+	import type {PageData} from "./$types";
+	import { onMount } from "svelte";
+	import type { UserChoices } from "$lib/types";
+	import { FileDown } from "lucide-svelte";
+	import { prepare_brewfile } from "$lib/bundle";
+	export let data;
+    let [current_apps, current_pkgs, current_stream] = [data.apps, data.packages, data.stream]
     let input_choices: string[] = [];
     $: input_choices = $user_choice.casks.concat($user_choice.packages);
+    onMount(() => {
+        // restore choices from localStorage
+        user_choice.set(
+             {
+                casks: JSON.parse(localStorage.getItem("casks") || "[]"),
+                packages: JSON.parse(localStorage.getItem("formulae") || "[]"),
+            } as UserChoices
+        );
+
+        // update local storage with any changes from this point on
+        user_choice.subscribe(choices => {
+            window.localStorage.setItem("casks", JSON.stringify(choices.casks));
+            window.localStorage.setItem("formulae", JSON.stringify(choices.packages));
+        });
+    })
     function removeChip(e: any) {
         user_choice.update(ch => {
             ch.casks = ch.casks.filter(cask => cask != e.detail.chipValue);
@@ -34,49 +53,115 @@
     }
     let pagination: PaginationSettings = {
         offset: data.pagination,
-        limit: data.amount * 2,
+        limit: data.amount,
         size: data.total,
         amounts: [30, 50],
     };
     async function paginate(e: any) {
+        const val = parseInt(e.detail);
         switch (e.type) {
             case "amount":
-                window.location.href = `?p=${$page.url.searchParams.get("p")}&c=${e.detail / 2}`
+                pagination.limit = val;
                 break;
             case "page":
-                window.location.href = `?p=${e.detail}&c=${$page.url.searchParams.get("c")}`
+                pagination.offset = val;
                 break;
             default: return;
         }
+        await change_data();
+    }
+    async function change_data() {
+        const cur_pagination = pagination.offset;
+        const cur_amount = pagination.limit;
+        toastStore.trigger({
+            message: "Loading.."
+        })
+        window.location.href = `?p=${cur_pagination}&c=${cur_amount}`
+    }
+    async function fetch_brewskie() {
+        if (input_choices.length == 0) return;
+        let res = await fetch("/download", {
+            method: "POST",
+            body: JSON.stringify($user_choice)
+        });
+        const blob = await res.blob();
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.style.display = "none";
+        link.href = url;
+        link.download = "brewskie.sh";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
     }
 </script>
-<InputChip
-    bind:value={input_choices}
-    placeholder={"Know a brew you want? Type it here"}
-    whitelist={data.available_brews.map(brew => brew.token)}
-    allowDuplicates={true}
-    on:remove={removeChip}
-    on:add={addChip}
-    name="inp" />
 
-    <Paginator
-        bind:settings={pagination}
-        on:page={paginate}
-        on:amount={paginate} />
-
-    <!-- <p>apps length {data.apps.length}</p>
+<!-- <p>apps length {data.apps.length}</p>
     <p>pkg length {data.packages.length}</p>
     <p>pagination {$page.url.searchParams.get("p") || "0"}</p>
-    <p>ch: {input_choices}</p> -->
-
+    <p>ch: {input_choices}</p>
+    <p>{JSON.stringify($user_choice)}</p> -->
+    
     <main>
-        <Brews apps={data.apps} packages={data.packages} stream={data.stream} />
-    </main>
+    <div class="controls card variant-glass-primary">
+        <div class="brewfile">
+            <InputChip
+            class={"variant-glass-surface"}
+            bind:value={input_choices}
+            placeholder={"Know a brew you want? Type it here and press Enter.."}
+            whitelist={data.available_brews.map(brew => brew.token)}
+            allowDuplicates={true}
+            on:remove={removeChip}
+            on:add={addChip}
+            name="inp" />
+            <button 
+                class={`btn ${(input_choices.length == 0) ? "variant-soft-secondary" : "variant-filled-primary"}`}
+                on:click={fetch_brewskie}>
+                <FileDown />
+                Done!
+            </button>
+        </div>
+        
+        <Paginator
+            class="variant-glass-primary paginator"
+            bind:settings={pagination}
+            select="select min-w-[150px] variant-soft-surface"
+            buttonClasses="btn-icon variant-filled-surface "
+            justify="justify-around"
+            amountText="Brews"
+            buttonTextNext={"👉"}
+            buttonTextPrevious={"👈"}
+            on:page={paginate}
+            on:amount={paginate} />
+    </div>
+    <Brews apps={current_apps} packages={current_pkgs} stream={current_stream} />
+</main>
 
 <style>
     main {
+        position: relative;
         display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 1rem;
+        grid-template-areas: 
+            "controls controls"
+            "casks pkgs"
+            "casks pkgs";
+        gap: 2.5rem;
+        margin: 2.5rem 5rem;
+    }
+    .brewfile {
+        display: grid;
+        grid-template-columns: 8fr 1fr;
+    }
+    .controls {
+        top: 1rem;
+        grid-area: controls;
+        display: grid;
+        position: sticky;
+        width: 100%;
+        z-index: 1;
+    }
+    :global(.paginator) {
+        padding: .25rem 0;
     }
 </style>
