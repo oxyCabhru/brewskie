@@ -22,7 +22,7 @@
 
 <div class="card pr-4 pl-4 pb-4">
     <div class="card-header">
-        <h1 class="text-3xl">Brewskie</h1>
+        <h1 class="h1">Brewskie</h1>
         <p class="text-white/50">Install apps and packages quickly and easily, powered by Homebrew.</p>
     </div>
     <p>
@@ -33,7 +33,7 @@
         but now-- for macOS!
     </p>
 
-    <h3 class="text-xl">How to use:</h3>
+    <h3 class="h3 text-xl">How to use:</h3>
         <ol class="list-decimal pl-8">
             <li>
                 <span class="text-secondary-500">

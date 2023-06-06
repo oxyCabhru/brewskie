@@ -1,6 +1,6 @@
 <script lang="ts">
     import { user_choice } from "$lib/store";
-	import { InputChip, Paginator, toastStore, type PopupSettings, Autocomplete, type AutocompleteOption, popup } from "@skeletonlabs/skeleton";
+	import { InputChip, Paginator, toastStore, Autocomplete, type AutocompleteOption, popup } from "@skeletonlabs/skeleton";
 	import type { PaginationSettings } from "@skeletonlabs/skeleton/dist/components/Paginator/types";
     import Brews from "$lib/Brews.svelte";
 	import type {PageData} from "./$types";

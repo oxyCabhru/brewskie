@@ -6,25 +6,37 @@
 	// Most of your app wide CSS should be put in this file
 	import '../app.postcss';
 	import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
-	import { AppShell, Toast, Modal, storePopup } from '@skeletonlabs/skeleton';
+	import { AppShell, Toast, Modal, storePopup, Drawer, drawerStore, type DrawerSettings } from '@skeletonlabs/skeleton';
 	import { openAbout } from '$lib/store';
-	import { Info } from 'lucide-svelte';
-
+	import { Beer, Info } from 'lucide-svelte';
+	import Sixpacks from '$lib/Sixpacks.svelte';
 	storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
-			
+	const view_sixpacks = () => drawerStore.open({
+			bgDrawer: 'bg-secondary-900 text-white',
+			bgBackdrop: 'bg-gradient-to-tr from-tertiary-500/50 via-secondary-500/50 to-primary-500/50',
+			width: 'w-[280px] md:w-[480px]',
+			padding: 'p-4',
+			rounded: 'rounded-xl',
+		});
 </script>
 <Modal />
+<Drawer><Sixpacks /></Drawer>
 <AppShell>
 	<Toast buttonDismiss="hidden" background="variant-glass-secondary" />
 	<div class="header">
-		<h1>Brewskie! 🤙<br>Install apps and packages quickly and easily, powered by 
-			<a href="https://brew.sh" class="font-medium text-secondary-600 dark:text-secondary-500 hover:underline">
+		<h1 class="h1"><span class="gradient-heading primary-gr">Brewskie! 🤙</span><br>Install apps and packages quickly and easily, powered by 
+			<a href="https://brew.sh" class="font-medium gradient-heading secondary-gr hover:underline">
 				Homebrew.
 			</a>
 		</h1>
-		<button class="btn text-secondary-600 p-2" on:click={openAbout}>
-			<Info />
-		</button>
+		<div class="icons flex flex-col">
+			<button class="btn text-secondary-600" title="About.." on:click={openAbout}>
+				<Info />
+			</button>
+			<button class="btn text-secondary-600" title="Premade Brewskies" on:click={view_sixpacks}>
+				<Beer />
+			</button>
+		</div>
 	</div>
 	<slot />
 </AppShell>
@@ -37,5 +49,6 @@
 		flex-flow: row nowrap;
 		width: 100%;
 		justify-content:space-between;
+		align-items: center;
 	}
 </style>

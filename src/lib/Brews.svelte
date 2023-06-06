@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { user_choice } from "$lib/store";
+	import { toggleBrew, user_choice } from "$lib/store";
 	import { Download, ExternalLink } from "lucide-svelte";
 	import type { CaskApiResponse, FormulaApiResponse } from "$lib/types";
 	// import millify from "millify";
@@ -19,37 +19,6 @@
         apps: {data: Promise<CaskApiResponse | any>, token: string}[],
         packages: { data: Promise<FormulaApiResponse | any>, token: string}[]
     };
-    function toggleBrew(e: MouseEvent) {
-            if (!e.currentTarget) return;
-		const target = e.currentTarget as HTMLButtonElement;
-            if (!target.dataset.token) return;
-            if (!target.dataset.chosen) return;
-            if (!target.dataset.brewtype) return;
-        const token = target.dataset.token;
-        const brew_type = target.dataset.brewtype;
-		let chosen = target.dataset.chosen;
-		if (chosen == "true") {
-			user_choice.update(val => {
-                if (brew_type == "cask") {
-                    val.casks = val.casks.filter(el => el != token)
-                } else {
-                    val.packages = val.packages.filter(el => el != token);
-                }
-				return val;
-			})
-			chosen = "false"
-		} else {
-			user_choice.update(val => {
-                if (brew_type == "cask") {
-                    val.casks.push(token)
-                } else {
-                    val.packages.push(token)
-                }
-				return val;
-			})
-			chosen = "true"
-		}
-	}
 </script>
 
 <div class="container">

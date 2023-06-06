@@ -51,6 +51,37 @@ export function openAbout() {
     };
     modalStore.trigger(modal);
 }
+export function toggleBrew(e: MouseEvent) {
+        if (!e.currentTarget) return;
+    const target = e.currentTarget as HTMLButtonElement;
+        if (!target.dataset.token) return;
+        if (!target.dataset.chosen) return;
+        if (!target.dataset.brewtype) return;
+    const token = target.dataset.token;
+    const brew_type = target.dataset.brewtype;
+    let chosen = target.dataset.chosen;
+    if (chosen == "true") {
+        user_choice.update(val => {
+            if (brew_type == "cask") {
+                val.casks = val.casks.filter(el => el != token)
+            } else {
+                val.packages = val.packages.filter(el => el != token);
+            }
+            return val;
+        })
+        chosen = "false"
+    } else {
+        user_choice.update(val => {
+            if (brew_type == "cask") {
+                val.casks.push(token)
+            } else {
+                val.packages.push(token)
+            }
+            return val;
+        })
+        chosen = "true"
+    }
+}
 
 export let user_choice: Writable<UserChoices> = writable({
     casks: [],

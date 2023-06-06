@@ -1,3 +1,6 @@
+import type { Github, Icon, IconEvents, IconProps } from "lucide-svelte";
+import type { SvelteComponent, SvelteComponentTyped } from "svelte";
+
 export type CaskApiResponse = {
     token: string;
     full_token: string;
@@ -237,7 +240,14 @@ export type FormulaInstalls = {
 
 export type Brew = {
   token: string,
-  type: "cask" | "formula"
+  type: "cask" | "formula",
+  description?: string
+}
+
+export type SixPack = {
+  category: string,
+  brews: Brew[],
+  lucide_icon?: any,
 }
 
 export type UserChoices = {

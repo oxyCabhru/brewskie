@@ -6,6 +6,19 @@ body {
 
 @font-face {
 	font-family: 'Abril Fatface';
-	src: url('/fonts/AbrilFatface.ttf');
+	src: url('/fonts/Geologica.ttf');
 	font-display: swap;
+}
+
+.gradient-heading {
+	@apply bg-clip-text text-transparent box-decoration-clone;
+	/* Direction */
+	@apply bg-gradient-to-br;
+}
+
+.gradient-heading.primary-gr {
+	@apply from-red-500 to-yellow-500;
+}
+.gradient-heading.secondary-gr {
+	@apply from-blue-500 to-cyan-500;
 }
