@@ -7,7 +7,7 @@
 	import '../app.postcss';
 	import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
 	import { AppShell, Toast, Modal, storePopup, Drawer, drawerStore, type DrawerSettings } from '@skeletonlabs/skeleton';
-	import { openAbout } from '$lib/store';
+	import { openAbout, user_choice } from '$lib/store';
 	import { Beer, Info } from 'lucide-svelte';
 	import Sixpacks from '$lib/Sixpacks.svelte';
 	storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
@@ -19,6 +19,11 @@
 			rounded: 'rounded-xl',
 		});
 </script>
+<svelte:head>
+	<title>
+		Brewskie {($user_choice.casks.length > 0 || $user_choice.packages.length > 0) ? `| ${$user_choice.casks.length} Casks | ${$user_choice.packages.length} Formulae` : "" }
+	</title>
+</svelte:head>
 <Modal />
 <Drawer><Sixpacks /></Drawer>
 <AppShell>
