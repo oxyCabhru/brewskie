@@ -144,12 +144,17 @@
                 </div>
                 {/if}
                 {/key}
-            <button 
-                class={`btn ${(input_choices.length == 0) ? "variant-soft-secondary" : "variant-filled-primary"}`}
-                on:click={fetch_brewskie}>
-                <FileDown />
-                Done!
-            </button>
+            <div class="flex flex-row">
+                <button class={`btn flex flex-row gap-2 ${(input_choices.length == 0) ? "variant-soft-secondary" : "variant-soft-primary"}`} on:click={view_selections}>
+                    <CheckCheck /> Preview
+                </button>
+                <button 
+                    class={`btn flex flex-row gap-2 ${(input_choices.length == 0) ? "variant-soft-secondary" : "variant-filled-primary"}`}
+                    on:click={fetch_brewskie}>
+                    <FileDown />
+                    Done!
+                </button>
+            </div>
         </div>
         {#if $page_options.pagination}
         <Paginator
@@ -168,20 +173,15 @@
             on:amount={paginate} />
         {/if}
         <div class={`variant-glass relative`}>
-            <div class={`important-options absolute flex variant-glass ${$page_options.options ? "h-full flex-col" : "flex-row justify-around w-full"}`}>
-                <button class={`btn pt-0 pb-0 h-full `} on:click={view_selections}>
-                    <CheckCheck />
-                </button>
-                <button
-                    class={`btn pt-0 pb-0 h-full  `}
-                    on:click={() => {$page_options.options = !$page_options.options}}>
-                    {#if $page_options.options}
-                        <ChevronUp />
-                    {:else}
-                        <ChevronDown />
-                    {/if}
-                </button>
-            </div>
+            <button
+                class={`absolute btn h-full ${$page_options.options ? "" : "w-full"}`}
+                on:click={() => {$page_options.options = !$page_options.options}}>
+                {#if $page_options.options}
+                    <ChevronUp />
+                {:else}
+                    <ChevronDown />
+                {/if}
+            </button>
             {#if $page_options.options}
             <div class="flex flex-row justify-around">
                 <button
@@ -214,6 +214,7 @@
                 </button>
             </div>
             {/if}
+
         </div>
     </div>
     <Brews apps={current_apps} packages={current_pkgs} stream={current_stream} />
