@@ -1,12 +1,13 @@
 <script lang="ts">
-    import { user_choice } from "$lib/store";
-	import { InputChip, Paginator, toastStore, Autocomplete, type AutocompleteOption, popup } from "@skeletonlabs/skeleton";
+    import { page_options, user_choice } from "$lib/store";
+	import { InputChip, Paginator, toastStore, Autocomplete, type AutocompleteOption, popup, drawerStore, type PopupSettings } from "@skeletonlabs/skeleton";
 	import type { PaginationSettings } from "@skeletonlabs/skeleton/dist/components/Paginator/types";
-    import Brews from "$lib/Brews.svelte";
+    import Brews from "$lib/components/Brews.svelte";
 	import type {PageData} from "./$types";
 	import { onMount } from "svelte";
 	import type { UserChoices } from "$lib/types";
-	import { FileDown } from "lucide-svelte";
+	import { Beer, CheckCheck, ChevronDown, ChevronUp, FileDown, LayoutPanelTop, TextCursorInput } from "lucide-svelte";
+	import { view_selections, view_sixpacks } from "$lib/functions";
 	export let data;
     let raw_input: string;
     let autocomp_options: AutocompleteOption[] = data.available_brews.map(brew => {
@@ -112,6 +113,11 @@
         document.body.removeChild(link);
         URL.revokeObjectURL(url);
     }
+    const autocompletionsWarning: PopupSettings = {
+        event: "click",
+        target: "autocompletions-warning",
+        placement:"bottom",
+    }
 </script>
     <main>
     <div class="controls card variant-glass-primary">
@@ -127,13 +133,17 @@
                 on:remove={removeChip}
                 on:add={addChip}
                 name="inp" />
-                <div data-popup="autocomplete" class="autocomplete card w-full h-32 overflow-y-auto">
+                {#key $page_options.autocomplete}
+                {#if $page_options.autocomplete}
+                <div data-popup="autocomplete" class="autocomplete card w-full h-32 overflow-y-auto z-50">
                     <Autocomplete
                         bind:input={raw_input}
                         options={autocomp_options}
                         on:selection={addChip}
                     />
                 </div>
+                {/if}
+                {/key}
             <button 
                 class={`btn ${(input_choices.length == 0) ? "variant-soft-secondary" : "variant-filled-primary"}`}
                 on:click={fetch_brewskie}>
@@ -141,6 +151,7 @@
                 Done!
             </button>
         </div>
+        {#if $page_options.pagination}
         <Paginator
             class="variant-glass-primary paginator"
             bind:settings={pagination}
@@ -155,6 +166,55 @@
             buttonTextPrevious={"👈"}
             on:page={paginate}
             on:amount={paginate} />
+        {/if}
+        <div class={`variant-glass relative`}>
+            <div class={`important-options absolute flex variant-glass ${$page_options.options ? "h-full flex-col" : "flex-row justify-around w-full"}`}>
+                <button class={`btn pt-0 pb-0 h-full `} on:click={view_selections}>
+                    <CheckCheck />
+                </button>
+                <button
+                    class={`btn pt-0 pb-0 h-full  `}
+                    on:click={() => {$page_options.options = !$page_options.options}}>
+                    {#if $page_options.options}
+                        <ChevronUp />
+                    {:else}
+                        <ChevronDown />
+                    {/if}
+                </button>
+            </div>
+            {#if $page_options.options}
+            <div class="flex flex-row justify-around">
+                <button
+                    use:popup={autocompletionsWarning}
+                    class={`btn flex flex-col ${$page_options.autocomplete ? "variant-ghost-secondary" : ""}`}
+                    on:click={() => {$page_options.autocomplete = !$page_options.autocomplete}}>
+                    <TextCursorInput size="18" />
+                    <span class="hidden lg:block">
+                        Toggle Autocompletions
+                    </span>
+                    <div data-popup="autocompletions-warning">
+                        On mobile, could cause worse page performance!
+                    </div>
+                </button>
+                <button
+                    class={`btn flex flex-col ${$page_options.pagination ? "variant-ghost-secondary" : ""}`}
+                    on:click={() => {$page_options.pagination = !$page_options.pagination}}>
+                    <LayoutPanelTop size="18" />
+                    <span class="hidden lg:block">
+                        Toggle Pagination Bar
+                    </span>
+                </button>
+                <button
+                    class="btn flex flex-col"
+                    on:click={view_sixpacks}>
+                    <Beer size="18" />
+                    <span class="hidden lg:block">
+                        Access Premade Brewskies
+                    </span>
+                </button>
+            </div>
+            {/if}
+        </div>
     </div>
     <Brews apps={current_apps} packages={current_pkgs} stream={current_stream} />
 </main>
@@ -184,7 +244,7 @@
         display: grid;
         position: sticky;
         width: 100%;
-        height: 6rem;
+        /* height: 6rem; */
         z-index: 1;
     }
     :global(.paginator) {

@@ -7,17 +7,12 @@
 	import '../app.postcss';
 	import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
 	import { AppShell, Toast, Modal, storePopup, Drawer, drawerStore, type DrawerSettings } from '@skeletonlabs/skeleton';
-	import { openAbout, user_choice } from '$lib/store';
+	import { active_drawer, user_choice } from '$lib/store';
 	import { Beer, Info } from 'lucide-svelte';
-	import Sixpacks from '$lib/Sixpacks.svelte';
+	import Sixpacks from '$lib/components/Sixpacks.svelte';
+	import { openAbout, view_selections, view_sixpacks } from '$lib/functions';
+	import Selected from '$lib/components/Selected.svelte';
 	storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
-	const view_sixpacks = () => drawerStore.open({
-			bgDrawer: 'bg-secondary-900 text-white',
-			bgBackdrop: 'bg-gradient-to-tr from-tertiary-500/50 via-secondary-500/50 to-primary-500/50',
-			width: 'w-[280px] md:w-[480px]',
-			padding: 'p-4',
-			rounded: 'rounded-xl',
-		});
 </script>
 <svelte:head>
 	<title>
@@ -25,7 +20,13 @@
 	</title>
 </svelte:head>
 <Modal />
-<Drawer><Sixpacks /></Drawer>
+<Drawer>
+	{#if $active_drawer == "sixpacks"}
+	<Sixpacks />
+	{:else if $active_drawer == "selections"}
+	<Selected />
+	{/if}
+</Drawer>
 <AppShell>
 	<Toast buttonDismiss="hidden" background="variant-glass-secondary" />
 	<div class="header">
@@ -35,11 +36,9 @@
 			</a>
 		</h1>
 		<div class="icons flex flex-col">
-			<button class="btn text-secondary-600" title="About.." on:click={openAbout}>
+			<button class="btn text-secondary-600 flex flex-col" title="About.." on:click={openAbout}>
 				<Info />
-			</button>
-			<button class="btn text-secondary-600" title="Premade Brewskies" on:click={view_sixpacks}>
-				<Beer />
+				About
 			</button>
 		</div>
 	</div>
