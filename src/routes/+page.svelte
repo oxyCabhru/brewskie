@@ -123,7 +123,7 @@
     <div class="controls card variant-glass-primary">
         <div class="brewfile">
             <InputChip
-                class={"variant-glass-surface"}
+                class={"variant-glass-surface placeholder:text-red-500"}
                 chips={"input-chips variant-filled"}
                 bind:input={raw_input}
                 bind:value={input_choices}
@@ -135,7 +135,7 @@
                 name="inp" />
                 {#key $page_options.autocomplete}
                 {#if $page_options.autocomplete}
-                <div data-popup="autocomplete" class="autocomplete card w-full h-32 overflow-y-auto z-50">
+                <div data-popup="autocomplete" class="autocomplete card w-full h-32 overflow-y-auto">
                     <Autocomplete
                         bind:input={raw_input}
                         options={autocomp_options}
@@ -174,7 +174,7 @@
         {/if}
         <div class={`variant-glass relative`}>
             <button
-                class={`absolute btn h-full ${$page_options.options ? "" : "w-full"}`}
+                class={`absolute btn h-full variant-glass-surface ${$page_options.options ? "" : "w-full"}`}
                 on:click={() => {$page_options.options = !$page_options.options}}>
                 {#if $page_options.options}
                     <ChevronUp />
@@ -192,8 +192,8 @@
                     <span class="hidden lg:block">
                         Toggle Autocompletions
                     </span>
-                    <div data-popup="autocompletions-warning">
-                        On mobile, could cause worse page performance!
+                    <div data-popup="autocompletions-warning" class="variant-glass-secondary p-2 rounded">
+                        On mobile, could cause worse page performance!<br>Can be unreliable..
                     </div>
                 </button>
                 <button
@@ -233,7 +233,7 @@
     .autocomplete {
         margin-top: .25rem;
         width: 88%;
-        z-index: 1;
+        z-index: 1000;
     }
     .brewfile {
         display: grid;
