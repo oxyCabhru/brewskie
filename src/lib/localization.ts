@@ -29,17 +29,17 @@ const sixpacks = {
         firefox:
         {
             en: "Supported by non-profit Mozilla Foundation, runs on the Gecko engine.",
-            he: "",
+            he: "דפדפן אינטרנט בקוד פתוח של חברת \"Mozilla\", רץ על המנוע של \"Gecko\". ",
         },
         chrome:
         {
             en: "Made by Google, the most popular web browser in the world. Runs on the Blink engine.",
-            he: "",
+            he: " דפדפן האינטרנט של גוגל. הפופולארי ביותר בעולם, רץ על המנוע של \"Blink\".",
         },
         orion:
         {
             en: "Made by Kagi, built specifically for macOS. Runs on the webkit engine, much like Safari.",
-            he: "",
+            he: "מנוע החיפוש של חברת \"Kagi\". יעודי למערכת ההפעלה של מק. כמו ספארי, רץ על המנוע של \"Wekbit\". ",
         }
     },
     social:
@@ -47,65 +47,70 @@ const sixpacks = {
         title:
         {
             en: "Instant Messaging",
-            he: "הודעות מיידיות",
+            he: "תוכנות צ'אט והתכתבות",
         },
         telegram:
         {
             en: "Cloud-based, encrypted instant messaging app, based on the MTProto protocol.",
-            he: "",
+            he: "תוכנת צ'אט מבוססת ענן. מאובטחת באמצעות פרוטוקול \"MTProto\". ",
         },
         whatsapp:
         {
             en: "One of the most popular instant messaging apps today, owned by Meta.",
-            he: "",
+            he: "בין תוכנות הצ'אט הפופולאריות ביותר כיום. מאת חברת \"Meta\".",
         },
         discord:
         {
             en: "An instant messaging, VoIP app centered around communities and gaming.",
-            he: "",
-        }
+            he: "תוכנת צ'אט המתרכזת בעיקר בשיחות ועידה. מציעה פלטפורמה נהדרת לתקשורת בין קהילות שונות.",
+        },
+        zoom:
+        {
+            en: "A video communication based app, specified for working and lecturing.",
+            he: "תוכנת צ'אט מבוססת שיחות וידאו. ייעודית ללימודים ועבודה.",
+            
     },
     essential:
     {
         title: 
         {
             en: "Essential for all",
-            he: "תוכנות מומלצות לכולם",
+            he: "תוכנות מומלצות",
         },
         raycast:
         {
             en: "Alternative for Spotlight, enhances your workflow.",
-            he: "",
+            he: "אלטרנטיבה לתוכנת ספוטלייט, מייעלת את השימוש במחשב. ",
         },
         iina:
         {
             en: "Decidedly modern, free, and open-source media player for macOS.",
-            he: "",
+            he: "תוכנה חינמית להרצת מדיה. מבוססת קוד פתוח וייעודית למק",
         },
         keka:
         {
             en: "A tool for compressing and decompressing files like .zip, .rar, and more.",
-            he: "",
+            he: "תוכנה לדחיסת קבצים בדומה לזיפ וראר.",
         },
         rectangle:
         {
             en: "Snap your windows to parts of your screen with ease.",
-            he: "",
+            he: "תוכנה המאפשרת פיצול של חלונות שונים באותו המסך.",
         },
         maccy:
         {
             en: "Keep track of your <⌘ + C>s, go back in history.",
-            he: "",
+            he: "שמור את הדברים שהעתקת לאחרונה על מנת שתוכל להשתמש בהם מאוחר יותר.",
         },
         aldente:
         {
             en: "Make the most of your Macbook's battery by preserving its health.",
-            he: "",
+            he: "תשמור על חיי סוללת המק שלך באמצעות תוכנה זו!",
         },
         hiddenbar:
         {
             en: "Hide unwanted menubar icons to keep it nice and tidy.",
-            he: "",
+            he: "הסתר את סמלי סרגל התפריטים הלא רצויים",
         }
     },
     privacy:
@@ -118,12 +123,12 @@ const sixpacks = {
         lulu:
         {
             en: "Get notified and block when an app tries to communicate outside your machine.",
-            he: "",
+            he: "קבל התראה וחסום במידת הצורך כאשר תוכנה שולחת פרטים מחוץ למכשירך.",
         },
         bitwarden:
         {
             en: "Open-source password manager and keep them secure with you across devices.",
-            he: "",
+            he: "תוכנה חינמית בקוד פתוח לניהול בטוח של הססמאות שלך מכל מקום ובכל מכשיר. ",
         }
     },
     gaming:
@@ -136,32 +141,32 @@ const sixpacks = {
         steam:
         {
             en: "Steam, made by Valve. Most people who play games have an account.",
-            he: "",
+            he: "תוכנה להרצה ורכישה של משחקים, המשומשת על יידי כולם. שייכת לחברת \"Valve\".",
         },
         prismlauncher:
         {
             en: "A free and open-source modded Minecraft client.",
-            he: "",
+            he: "תוכנת פתוחה להורדת מודים למיינקראפט",
         },
         origin:
         {
             en: "EA's solution to their digital distribution of games on Mac.",
-            he: "",
+            he: "תוכנת הרצת המשחקים הרשמית של חברת \"EA\" במחשבי מק.",
         },
         epic_games:
         {
-            en: "Epic Games Launcher. At least they give out a game or two every so often.",
-            he: "",
+            en: "Epic Games Launcher. At least they give out a free game or two every so often.",
+            he: "תוכנה להרצת משחקים. פופולארית בעיקר בעקבות פורנייט. מחלקת משחק חינם אחת לשבוע",
         },
         openemu:
         {
             en: "Emulate nearly any old-school game! ROMs not included.",
-            he: "",
+            he: "אימולטור למשחקים ישנים. לא כוללת ROM.",
         },
         battle_net:
         {
             en: "Blizzard's games at your fingertips. Could never really get into Warcraft..",
-            he: "",
+            he: "התוכנה הרשמית של בליזארד למשחקים כמו אוברווץ', דיאבלו וקול אוף דיוטי.",
         }
     }
 };
