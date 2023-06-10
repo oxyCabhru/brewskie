@@ -176,6 +176,7 @@
             {#if $page_options.options}
             <div class="flex flex-row justify-around">
                 <button
+                    aria-label="Toggle Autocompletions"
                     use:popup={autocompletionsWarning}
                     class={`btn flex flex-col ${$page_options.autocomplete ? "variant-ghost-secondary" : ""}`}
                     on:click={() => {$page_options.autocomplete = !$page_options.autocomplete}}>
@@ -188,6 +189,7 @@
                     </div>
                 </button>
                 <button
+                    aria-label="Toggle Pagination"
                     class={`btn flex flex-col ${$page_options.pagination ? "variant-ghost-secondary" : ""}`}
                     on:click={() => {$page_options.pagination = !$page_options.pagination}}>
                     <LayoutPanelTop size="18" />
@@ -196,6 +198,7 @@
                     </span>
                 </button>
                 <button
+                    aria-label="Access Premade Brewskies"
                     class="btn flex flex-col"
                     on:click={view_sixpacks}>
                     <Beer size="18" />
