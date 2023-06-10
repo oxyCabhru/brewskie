@@ -169,7 +169,8 @@ const sixpacks = {
             he: "התוכנה הרשמית של בליזארד למשחקים כמו אוברווץ', דיאבלו וקול אוף דיוטי.",
         }
     }
-};
+    }
+}
 
 const about_content = {
     localstorage_explain:
