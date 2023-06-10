@@ -184,7 +184,9 @@
                         }
                     }}>
                 <Globe />
-                {$locale.toggles.language[$lang]}
+                <span class="hidden lg:block">
+                    {$locale.toggles.language[$lang]}
+                </span>
                 </button>
                 <button
                     aria-label="Toggle Autocompletions"
