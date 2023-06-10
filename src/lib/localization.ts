@@ -67,8 +67,8 @@ const sixpacks = {
         zoom:
         {
             en: "A video communication based app, specified for working and lecturing.",
-            he: "תוכנת צ'אט מבוססת שיחות וידאו. ייעודית ללימודים ועבודה.",
-            
+            he: "תוכנת צ'אט מבוססת שיחות וידאו. ייעודית ללימודים ועבודה.",    
+        },
     },
     essential:
     {
@@ -169,8 +169,8 @@ const sixpacks = {
             he: "התוכנה הרשמית של בליזארד למשחקים כמו אוברווץ', דיאבלו וקול אוף דיוטי.",
         }
     }
-    }
 }
+
 
 const about_content = {
     localstorage_explain:
