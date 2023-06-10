@@ -9,34 +9,27 @@
 	import { Beer, CheckCheck, ChevronDown, ChevronUp, FileDown, LayoutPanelTop, TextCursorInput } from "lucide-svelte";
 	import { view_selections, view_sixpacks } from "$lib/functions";
 	export let data;
-    let raw_input: string;
-    let autocomp_options: AutocompleteOption[] = data.available_brews.map(brew => {
-        return {
-            label: brew.token,
-            value: brew.token,
-        } as AutocompleteOption
-    })
+    let raw_input: string = "";
+    $: raw_input = raw_input.toLowerCase();
+    let autocomp_options: AutocompleteOption[] = [];
+    $: autocomp_options = $page_options.autocomplete ?
+        data.available_brews.map(brew => {
+            return {
+                label: brew.token,
+                value: brew.token,
+            } as AutocompleteOption
+        })
+        :
+        [];
+    $: console.log(autocomp_options);
     let [current_apps, current_pkgs, current_stream] = [data.apps, data.packages, data.stream]
     let input_choices: string[] = [];
     $: input_choices = $user_choice.casks.concat($user_choice.packages);
     onMount(() => {
-        // restore choices from localStorage
-        user_choice.set(
-             {
-                casks: JSON.parse(localStorage.getItem("casks") || "[]"),
-                packages: JSON.parse(localStorage.getItem("formulae") || "[]"),
-            } as UserChoices
-        );
-
-        // update local storage with any changes from this point on
-        user_choice.subscribe(choices => {
-            window.localStorage.setItem("casks", JSON.stringify(choices.casks));
-            window.localStorage.setItem("formulae", JSON.stringify(choices.packages));
-        });
-
-        const el: HTMLElement | null = document.querySelector('[class="input-chip-field unstyled bg-transparent border-0 !ring-0 p-0 w-full"]');
-        if (el) {
-            popup(el, {
+        //manual trigger for autocomplete as a popup on the input box
+        const inputchips_input: HTMLElement | null = document.querySelector('[class="input-chip-field unstyled bg-transparent border-0 !ring-0 p-0 w-full"]');
+        if (inputchips_input && autocomp_options.length > 0) {
+            popup(inputchips_input, {
                 event: 'focus-click',
                 target: 'autocomplete',
                 placement: 'bottom',
@@ -134,7 +127,6 @@
                 on:add={addChip}
                 name="inp" />
                 {#key $page_options.autocomplete}
-                {#if $page_options.autocomplete}
                 <div data-popup="autocomplete" class="autocomplete card w-full h-32 overflow-y-auto">
                     <Autocomplete
                         bind:input={raw_input}
@@ -142,7 +134,6 @@
                         on:selection={addChip}
                     />
                 </div>
-                {/if}
                 {/key}
             <div class="flex flex-row">
                 <button class={`btn flex flex-row gap-2 ${(input_choices.length == 0) ? "variant-soft-secondary" : "variant-soft-primary"}`} on:click={view_selections}>
