@@ -1,15 +1,20 @@
 import { writable, type Writable } from "svelte/store";
 import type { UserChoices } from "$lib/types";
+import { localStorageStore } from '@skeletonlabs/skeleton';
 
-export let user_choice: Writable<UserChoices> = writable({
-    casks: [],
-    packages: [],
-});
+export let user_choice: Writable<UserChoices> = localStorageStore("user_choice",
+    {
+        casks: [],
+        packages: [],
+    }
+);
 
 export let active_drawer: Writable<string | null> = writable(null);
 
-export let page_options = writable({
-    autocomplete: false,
-    pagination: false,
-    options: true
-});
+export let page_options = localStorageStore("page_options", 
+    {
+        autocomplete: false,
+        pagination: false,
+        options: true
+    }
+);
