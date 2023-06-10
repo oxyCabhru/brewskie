@@ -1,11 +1,11 @@
 <script lang="ts">
-    import { page_options, user_choice } from "$lib/store";
+    import locale from "$lib/localization";
+    import { page_options, user_choice, lang } from "$lib/store";
 	import { InputChip, Paginator, toastStore, Autocomplete, type AutocompleteOption, popup, drawerStore, type PopupSettings } from "@skeletonlabs/skeleton";
 	import type { PaginationSettings } from "@skeletonlabs/skeleton/dist/components/Paginator/types";
     import Brews from "$lib/components/Brews.svelte";
 	import type {PageData} from "./$types";
 	import { onMount } from "svelte";
-	import type { UserChoices } from "$lib/types";
 	import { Beer, CheckCheck, ChevronDown, ChevronUp, FileDown, LayoutPanelTop, TextCursorInput } from "lucide-svelte";
 	import { view_selections, view_sixpacks } from "$lib/functions";
 	export let data;
@@ -114,13 +114,20 @@
 </script>
     <main>
     <div class="controls card variant-glass-primary">
+        <button class="btn variant-filled" on:click={() => {
+            if ($lang == "en") {
+                $lang = "he";
+            } else {
+                $lang = "en"
+            }
+        }}>toggle lang</button>
         <div class="brewfile">
             <InputChip
                 class={"variant-glass-surface placeholder:text-red-500"}
                 chips={"input-chips variant-filled"}
                 bind:input={raw_input}
                 bind:value={input_choices}
-                placeholder={"Know a brew you want? Type it here and press Enter.."}
+                placeholder={$locale.input_chips_placeholder[$lang]}
                 whitelist={data.available_brews.map(brew => brew.token)}
                 allowDuplicates={true}
                 on:remove={removeChip}
@@ -137,13 +144,12 @@
                 {/key}
             <div class="flex flex-row">
                 <button class={`btn flex flex-row gap-2 ${(input_choices.length == 0) ? "variant-soft-secondary" : "variant-soft-primary"}`} on:click={view_selections}>
-                    <CheckCheck /> Preview
+                    <CheckCheck /> {$locale.preview_selections[$lang]}
                 </button>
                 <button 
                     class={`btn flex flex-row gap-2 ${(input_choices.length == 0) ? "variant-soft-secondary" : "variant-filled-primary"}`}
                     on:click={fetch_brewskie}>
-                    <FileDown />
-                    Done!
+                    <FileDown /> {$locale.download_brewfile[$lang]}
                 </button>
             </div>
         </div>
@@ -182,10 +188,10 @@
                     on:click={() => {$page_options.autocomplete = !$page_options.autocomplete}}>
                     <TextCursorInput size="18" />
                     <span class="hidden lg:block">
-                        Toggle Autocompletions
+                        {$locale.toggles.autocomplete[$lang]}
                     </span>
                     <div data-popup="autocompletions-warning" class="variant-glass-secondary p-2 rounded">
-                        On mobile, could cause worse page performance!<br>Can be unreliable..
+                        {$locale.autocomplete_warning[$lang]}
                     </div>
                 </button>
                 <button
@@ -194,7 +200,7 @@
                     on:click={() => {$page_options.pagination = !$page_options.pagination}}>
                     <LayoutPanelTop size="18" />
                     <span class="hidden lg:block">
-                        Toggle Pagination Bar
+                        {$locale.toggles.pagination[$lang]}
                     </span>
                 </button>
                 <button
@@ -203,7 +209,7 @@
                     on:click={view_sixpacks}>
                     <Beer size="18" />
                     <span class="hidden lg:block">
-                        Access Premade Brewskies
+                        {$locale.access_premade_brewskies[$lang]}
                     </span>
                 </button>
             </div>

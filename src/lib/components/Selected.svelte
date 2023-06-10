@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { clearAll } from "$lib/functions";
-    import { user_choice } from "$lib/store";
+    import locale from "$lib/localization";
+    import { user_choice, lang } from "$lib/store";
 	import { CopyX, X } from "lucide-svelte";
 	import { fly } from "svelte/transition";
     $: input_choices = $user_choice.casks.concat($user_choice.packages);
@@ -16,15 +17,17 @@
 
 <div class="p-1">
     {#if input_choices.length > 0}
-    <h1 class="h1 text-center">These are your currently selected brews:</h1>
+    <h1 class="h1 text-center">
+        {$locale.some_brews_selected[$lang]}
+    </h1>
     <button class="btn variant-filled-warning flex flex-row gap-2 mt-4 w-full"
         on:click={clearAll}>
         <CopyX />
-        Clear all
+        {$locale.clear_all_selected[$lang]}
     </button>
     {:else}
     <h1 class="h1 text-center">
-        No brews currently selected!
+        {$locale.no_brews_selected[$lang]}
     </h1>
     {/if}
     <div class="brews m-2 flex flex-row flex-wrap gap-2">

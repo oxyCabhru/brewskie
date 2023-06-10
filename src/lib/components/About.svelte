@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { popup, type PopupSettings } from "@skeletonlabs/skeleton";
 	import { ExternalLink, Github, HelpCircle } from "lucide-svelte";
+    import locale from "$lib/localization";
+    import { lang } from "$lib/store";
     const localstorageExplain: PopupSettings = {
         event: "click",
         target: "localstorageExplain",
@@ -11,7 +13,7 @@
     class="alert-message variant-glass-secondary w-fit p-1 mb-2"
     data-popup="localstorageExplain">
     <p>
-        Brewskie uses your browser's local storage for keeping your selections between page loads.
+        {$locale.about_content.localstorage_explain[$lang]}
     </p>
     <a class="inline-flex items-center gap-1 font-medium text-secondary-600 dark:text-secondary-500 hover:underline" href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API#web_storage_concepts_and_usage" target="_blank">
     For more information on localStorage

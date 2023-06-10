@@ -3,7 +3,8 @@
 
 import { Accordion, AccordionItem, drawerStore, popup, type PopupSettings } from "@skeletonlabs/skeleton";
 import type { SixPack } from "$lib/types";
-import { user_choice } from "$lib/store";
+import { user_choice, lang } from "$lib/store";
+import locale from "$lib/localization";
 import { Gamepad2, EyeOff, Coffee, MessagesSquare, Globe, PlusCircle, PlusSquare, XSquare } from "lucide-svelte";
 import { toggleBrew } from "$lib/functions";
 
@@ -27,141 +28,141 @@ function add_sixpack(pack: SixPack) {
 }
 
 const browsers: SixPack = {
-    category: "Browsers",
+    category: $locale.sixpacks.browsers.title[$lang],
     lucide_icon: Globe,
     brews: [
         {   //based on gecko
             token: "firefox",
             type: "cask",
-            description: "Supported by non-profit Mozilla Foundation, runs on the Gecko engine."
+            description: $locale.sixpacks.browsers.firefox[$lang]
         },
         {   //based on blink
             token: "google-chrome",
             type: "cask",
-            description: "Made by Google, the most popular web browser in the world. Runs on the Blink engine."
+            description: $locale.sixpacks.browsers.chrome[$lang]
         },
         {   //based on webkit
             token: "orion",
             type: "cask",
-            description: "Made by Kagi, built specifically for macOS. Runs on the webkit engine, much like Safari."
+            description: $locale.sixpacks.browsers.orion[$lang]
         }
     ]
 }
 
 const social: SixPack = {
-    category: "Instant Messaging",
+    category: $locale.sixpacks.social.title[$lang],
     lucide_icon: MessagesSquare,
     brews: [
         {
             token: "telegram",
             type: "cask",
-            description: "Cloud-based, encrypted instant messaging app, based on the MTProto protocol."
+            description: $locale.sixpacks.social.telegram[$lang]
         },
         {
             token: "whatsapp",
             type: "cask",
-            description: "One of the most popular instant messaging apps today, owned by Meta."
+            description: $locale.sixpacks.social.whatsapp[$lang]
         },
         {
             token: "discord",
             type: "cask",
-            description: "An instant messaging, VoIP app centered around communities and gaming."
+            description: $locale.sixpacks.social.discord[$lang]
         }
     ]
 }
 
 const essential: SixPack = {
-    category: "Essential for all",
+    category: $locale.sixpacks.essential.title[$lang],
     lucide_icon: Coffee,
     brews: [ //the apps here are meant for the computer to be handle anything thrown at it, providing a bit of context for the user
         {   //better spotlight
             token: "raycast",
             type: "cask",
-            description: "Alternative for Spotlight, enhances your workflow."
+            description: $locale.sixpacks.essential.raycast[$lang]
         },
         {   //versatile media player
             token: "iina",
             type: "cask",
-            description: "Decidedly modern, free, and open-source media player for macOS."
+            description: $locale.sixpacks.essential.iina[$lang]
         },
         {   //handle any and all compressed archives
             token: "keka",
             type: "cask",
-            description: "A tool for compressing and decompressing files like .zip, .rar, and more."
+            description: $locale.sixpacks.essential.keka[$lang]
         },
         {   //QOL
             token: "rectangle",
             type: "cask",
-            description: "Snap your windows to parts of your screen with ease."
+            description: $locale.sixpacks.essential.rectangle[$lang]
         },
         {
             token: "maccy",
             type: "cask",
-            description: "Keep track of your <⌘ + C>s, go back in history."
+            description: $locale.sixpacks.essential.maccy[$lang]
         },
         {
             token: "aldente",
             type: "cask",
-            description: "Make the most of your Macbook's battery by preserving its health."
+            description: $locale.sixpacks.essential.aldente[$lang]
         },
         {
             token: "hiddenbar",
             type: "cask",
-            description: "Hide unwanted menubar icons to keep it nice and tidy."
+            description: $locale.sixpacks.essential.hiddenbar[$lang]
         }
     ]
 }
 
 const privacy: SixPack = {
-    category: "Privacy-conscious",
+    category: $locale.sixpacks.privacy.title[$lang],
     lucide_icon: EyeOff,
     brews: [
         {
             token: "lulu",
             type: "cask",
-            description: "Get notified and block when an app tries to communicate outside your machine."
+            description: $locale.sixpacks.privacy.lulu[$lang]
         },
         {
             token: "bitwarden",
             type: "cask",
-            description: "Open-source password manager and keep them secure with you across devices."
+            description: $locale.sixpacks.privacy.bitwarden[$lang]
         }
     ]
 }
 
 const gaming: SixPack = {
-    category: "Gaming",
+    category: $locale.sixpacks.gaming.title[$lang],
     lucide_icon: Gamepad2,
     brews: [ //i do *not* want to add the epic games launcher here. it sucks.
         {
             token: "steam",
             type: "cask",
-            description: "Steam, made by Valve. Most people who play games have an account."
+            description: $locale.sixpacks.gaming.steam[$lang]
         },
         {
             token: "prismlauncher",
             type: "cask",
-            description: "A free and open-source modded Minecraft client."
+            description: $locale.sixpacks.gaming.prismlauncher[$lang]
         },
         {
             token: "origin",
             type: "cask",
-            description: "EA's solution to their digital distribution of games on Mac."
+            description: $locale.sixpacks.gaming.origin[$lang]
         },
         {   //sigh
             token: "epic-games",
             type: "cask",
-            description: "Epic Games Launcher. At least they give out a game or two every so often."
+            description: $locale.sixpacks.gaming.epic_games[$lang]
         },
         {
             token: "openemu",
             type: "cask",
-            description: "Emulate nearly any old-school game! ROMs not included."
+            description: $locale.sixpacks.gaming.openemu[$lang]
         },
         {
             token: "battle-net",
             type: "cask",
-            description: "Blizzard's games at your fingertips. Could never really get into Warcraft.."
+            description: $locale.sixpacks.gaming.battle_net[$lang]
         }
     ]
 }
@@ -255,10 +256,10 @@ const packs = [browsers, social, essential, privacy, gaming];
 <div class="p-1">
     <div class="card-header text-center">
         <h1 class="h1 gradient-heading primary-gr">
-            Premade Brewskies!
+            {$locale.sixpacks.title.premade[$lang]}
         </h1>
         <h2 class="h2">
-            Come get yours!
+            {$locale.sixpacks.title.call_to_action[$lang]}
         </h2>
     </div>
     <Accordion>
@@ -269,7 +270,7 @@ const packs = [browsers, social, essential, privacy, gaming];
                 </svelte:fragment>
 
                 <svelte:fragment slot="summary">
-                    <div class="flex flex-row justify-between">
+                    <div class="pr-2 flex flex-row justify-between">
                         {pack.category}
                         <button
                             class="btn btn-sm flex flex-row gap-1 [&>*]:pointer-events-none"
@@ -278,7 +279,7 @@ const packs = [browsers, social, essential, privacy, gaming];
                             >
                             <span class="card p-1 variant-filled-secondary" data-popup="add-to-selection">
                                 <div class="arrow variant-filled-secondary" />
-                                Add all to selection
+                                {$locale.sixpacks.add_all_to_selection[$lang]}
                             </span>
                             <PlusSquare size="16" />
                         </button>

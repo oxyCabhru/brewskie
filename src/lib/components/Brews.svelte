@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { user_choice } from "$lib/store";
+	import { user_choice, lang } from "$lib/store";
+    import locale from "$lib/localization";
 	import { Download, ExternalLink } from "lucide-svelte";
 	import type { CaskApiResponse, FormulaApiResponse } from "$lib/types";
 	import { toggleBrew } from "$lib/functions";
@@ -38,8 +39,7 @@
                     </h1>
                     <span
                         class="badge variant-filled-primary"
-                    title="Downloads in the past 90 days">
-                    <!-- {millify(parseInt(cask.count))} -->
+                    title={$locale.downloads_tooltip[$lang]}>
                     {parseInt(cask.count)}
                     <Download style="display: inline" size={18} />
                 </span>
@@ -54,8 +54,7 @@
                     </h1>
                     <span
                         class="badge variant-filled-primary"
-                        title="Downloads in the past 30 days">
-                        <!-- {millify(parseInt(api_response.analytics.install["30d"][api_response.token]))} -->
+                        title={$locale.downloads_tooltip[$lang]}>
                         {parseInt(api_response.analytics.install["30d"][api_response.token])}
                         <Download style="display: inline" size={18} />
                     </span>
@@ -84,8 +83,7 @@
                 <h1>{pkg.formula}</h1>
                 <span
                 class="badge variant-filled-primary"
-                title="Downloads in the past 90 days">
-                <!-- {millify(parseInt(pkg.count))} -->
+                title={$locale.downloads_tooltip[$lang]}>
                 {parseInt(pkg.count)}
                 <Download style="display: inline" size={18} />
             </span>
@@ -100,8 +98,7 @@
                     </h1>
                     <span
                         class="badge variant-filled-primary"
-                        title="Downloads in the past 30 days">
-                        <!-- {millify(parseInt(formula.analytics.install_on_request["30d"][formula.name]))} -->
+                        title={$locale.downloads_tooltip[$lang]}>
                         {parseInt(formula.analytics.install_on_request["30d"][formula.name])}
                         <Download style="display: inline" size={18} />
                     </span>

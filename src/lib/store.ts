@@ -9,6 +9,8 @@ export let user_choice: Writable<UserChoices> = localStorageStore("user_choice",
     }
 );
 
+export let lang: Writable<"en" | "he"> = localStorageStore("lang", "en");
+
 export let active_drawer: Writable<string | null> = writable(null);
 
 export let page_options = localStorageStore("page_options", 
