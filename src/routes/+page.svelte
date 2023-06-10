@@ -6,7 +6,7 @@
     import Brews from "$lib/components/Brews.svelte";
 	import type {PageData} from "./$types";
 	import { onMount } from "svelte";
-	import { Beer, CheckCheck, ChevronDown, ChevronUp, FileDown, LayoutPanelTop, TextCursorInput } from "lucide-svelte";
+	import { Beer, CheckCheck, ChevronDown, ChevronUp, FileDown, Globe, LayoutPanelTop, TextCursorInput } from "lucide-svelte";
 	import { view_selections, view_sixpacks } from "$lib/functions";
 	export let data;
     let raw_input: string = "";
@@ -21,7 +21,6 @@
         })
         :
         [];
-    $: console.log(autocomp_options);
     let [current_apps, current_pkgs, current_stream] = [data.apps, data.packages, data.stream]
     let input_choices: string[] = [];
     $: input_choices = $user_choice.casks.concat($user_choice.packages);
@@ -114,13 +113,6 @@
 </script>
     <main>
     <div class="controls card variant-glass-primary">
-        <button class="btn variant-filled" on:click={() => {
-            if ($lang == "en") {
-                $lang = "he";
-            } else {
-                $lang = "en"
-            }
-        }}>toggle lang</button>
         <div class="brewfile">
             <InputChip
                 class={"variant-glass-surface placeholder:text-red-500"}
@@ -181,6 +173,19 @@
             </button>
             {#if $page_options.options}
             <div class="flex flex-row justify-around">
+                <button
+                    aria-label="Toggle Language"
+                    class="btn flex flex-col"
+                    on:click={() => {
+                        if ($lang == "en") {
+                            $lang = "he";
+                        } else {
+                            $lang = "en"
+                        }
+                    }}>
+                <Globe />
+                {$locale.toggles.language[$lang]}
+                </button>
                 <button
                     aria-label="Toggle Autocompletions"
                     use:popup={autocompletionsWarning}

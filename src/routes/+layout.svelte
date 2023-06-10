@@ -9,18 +9,15 @@
 	import { AppShell, Toast, Modal, storePopup, Drawer } from '@skeletonlabs/skeleton';
 	import { active_drawer, lang, user_choice } from '$lib/store';
 	import locale from "$lib/localization";
-	import { Beer, Info } from 'lucide-svelte';
+	import { Info } from 'lucide-svelte';
 	import Sixpacks from '$lib/components/Sixpacks.svelte';
 	import { openAbout } from '$lib/functions';
 	import Selected from '$lib/components/Selected.svelte';
 	import { onMount } from 'svelte';
 	storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
 	onMount(() => {
-		const body = document.body;
 		lang.subscribe(lang => {
-			body.style.direction = 
-				lang == "he" ?
-				"rtl" : "ltr";
+			document.documentElement.dir = lang == "he" ? "rtl" : "ltr";
 		})
 	})
 </script>

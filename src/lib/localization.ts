@@ -328,6 +328,10 @@ export default readable(
                 he: "סיימתי!",
             },
         toggles: {
+                language: {
+                    en: "Toggle Language",
+                    he: "החלף שפה",
+                },
                 autocomplete: {
                     en: "Toggle Autocompletions",
                     he: "השלמה אוטומטית",
