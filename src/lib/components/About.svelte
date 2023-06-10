@@ -75,8 +75,8 @@
                 </span>
                 <p class="text-white/60">
                     {$locale.about_content.how_to.step3.detail_1[$lang]}
-                    <a class="inline-flex items-center gap-1 font-medium text-tertiary-600 hover:underline" href="https://support.apple.com/en-gb/guide/terminal/apdd100908f-06b3-4e63-8a87-32e71241bab4/mac" target="_blank">
-                        {$locale.about_content.how_to.step3.link[$lang]}
+                    <a class="inline-flex items-center gap-1 font-medium text-tertiary-600 hover:underline" href={`${$locale.about_content.how_to.step3.link[$lang]}`} target="_blank">
+                        {$locale.about_content.how_to.step3.link_desc[$lang]}
                         <ExternalLink size="16" />
                     </a><br>
                     {$locale.about_content.how_to.step3.detail_2[$lang]}

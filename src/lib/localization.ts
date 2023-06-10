@@ -254,7 +254,12 @@ This is mainly a security measure, and we are all grateful for it.`,
 אתם חייבים להפוך אותו לסקריפט ניתן להרצה באופן מפורש.
 התנהגות זו היא בעיקר כדי לשמור על ביטחון המחשב שלכם, והרי זה מבורך.`,
             },
-            link: 
+            link:
+            {
+                en: "https://support.apple.com/en-gb/guide/terminal/apdd100908f-06b3-4e63-8a87-32e71241bab4/mac",
+                he: "https://support.apple.com/he-il/guide/terminal/apdd100908f-06b3-4e63-8a87-32e71241bab4/mac",
+            },
+            link_desc: 
             {
                 en: "Please follow Apple's instructions for making a script executable.",
                 he: "עקבו אחר ההוראות הרשמיות של אפל כדי להפוך את הסקריפט לניתן להרצה.",
