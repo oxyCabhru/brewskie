@@ -170,8 +170,108 @@ const about_content = {
     localstorage_explain:
     {
         en: "Brewskie uses your browser's local storage for keeping your selections between page loads.",
-        he: "",
+        he: "ברוסקי משתמש באחסון המקומי של הדפדפן שלכם כדי לשמור את ההעדפות שלכם בין עמודים.",
+    },
+    localstorage_link:
+    {
+        en: "For more information on localStorage",
+        he: "לעוד מידע על localStorage.."
+    },
+    welcome:
+    {
+        en: "Welcome to Brewskie, a tool for quickly and easily getting started with a new machine, not-too-unlike",
+        he: "ברוכים הבאים לברוסקי, כלי להתחלה מהירה עם מחשב חדש, לא שונה כל כך מ-",
+    },
+    welcome_now:
+    {
+        en: "but now-- for macOS!",
+        he: "אבל עכשיו-- עבור מחשבי מק!"
+    },
+    how_to:
+    {
+        title:
+        {
+            en: "How to use:",
+            he: "מדריך למשתמש:",
+        },
+        step1:
+        {
+            title: 
+            {
+                en: "Select apps and packages you'd like to install.",
+                he: "בחרו תוכנות וחבילות שתרצו להתקין."
+            },
+            detail:
+            {
+                en: `Alternatively, you can also search for them in the search bar. On desktop, little chips will appear and show the name of the Brew token of the corresponding cask or formula.
+                Selections will persist between uses of the site.`,
+                he: `לחילופין, אפשר גם לחפש אותם בשורת החיפוש למעלה. במסכים גדולים יתווספו צ'יפים קטנים עם השם של כל תוכנה וחבילה.
+                הבחירות שלכם יישמרו בין שימושים של האתר.`
+            }
+        },
+        step2:
+        {
+            title:
+            {
+                en: "Download the script and review it!",
+                he: "הורידו את הסקריפט ובדקו אותו!",
+            },
+            detail_1:
+            {
+                en: "Press the orange ",
+                he: "לחצו על הכפתור ",
+            },
+            detail_2:
+            {
+                en: ` button to download the script.
+I strongly encourage you to read its contents before running it, make sure you understand what you run, and stop if you don't feel comfortable with running it.
+The script installs Homebrew if your machine doesn't have it already,
+writes a `,
+                he: `להורדת הסקריפט.
+אני ממליץ מאוד לקרוא את התוכן של הקובץ לפני שאתם מריצים אותו. תבינו מה הסקריפט עושה, ואם אתם מרגישים לא בנוח עם זאת-- עצרו.
+הסקריפט מתקין Homebrew אם זה לא מותקן כבר במחשב שלכם, לאחר מכן הוא כותב `
+            },
+            detail_3:
+            {
+                en: ` into /tmp/brewskie,
+and attempts to run it using`,
+                he: "לתוך /tmp/brewskie, ומנסה להריץ אותו באמצעות הפקודה הבאה:"
+            }
+        },
+        step3:
+        {
+            title:
+            {
+                en: "Make the script executable and run it!",
+                he: "עשו את הסקריפט ניתן להרצה, והריצו אותו!",
+            },
+            detail_1:
+            {
+                en: `By default, you can't run the script after downloading it --
+you have to expressly make it executable.
+This is mainly a security measure, and we are all grateful for it.`,
+                he: `כברירת מחדל, לא ניתן להריץ את הסקריפט מיד לאחר ההורדה -- 
+אתם חייבים להפוך אותו לסקריפט ניתן להרצה באופן מפורש.
+התנהגות זו היא בעיקר כדי לשמור על ביטחון המחשב שלכם, והרי זה מבורך.`,
+            },
+            link: 
+            {
+                en: "Please follow Apple's instructions for making a script executable.",
+                he: "עקבו אחר ההוראות הרשמיות של אפל כדי להפוך את הסקריפט לניתן להרצה.",
+            },
+            detail_2:
+            {
+                en: "Run it as per the instructions, follow the prompts, and within a few minutes you should have all of your selected Brews installed! ",
+                he: "הריצו את הסקריפט לפי ההוראות, עקבו אחר הההנחיות בטרמינל, ובתוך מספר דקות כל התוכנות שלכם אמורות להיות מותקנות!",
+            }
+        }
+    },
+    credit:
+    {
+        en: "Made by Daniel Moshe 🤓",
+        he: "נבנה ע\"י דניאל משה 🤓",
     }
+
 }
 
 export default readable(
@@ -183,7 +283,7 @@ export default readable(
             },
             desc: {
                 en: "Install apps and packages quickly and easily, powered by ",
-                he: "התקנת תוכנות וחבילות בקלות ובמהירות, מונע ע\"י"
+                he: "התקנת תוכנות וחבילות בקלות ובמהירות, מונע ע\"י "
             },
             cask: {
                 en: "One cask",

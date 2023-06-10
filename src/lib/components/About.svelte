@@ -16,34 +16,39 @@
         {$locale.about_content.localstorage_explain[$lang]}
     </p>
     <a class="inline-flex items-center gap-1 font-medium text-secondary-600 dark:text-secondary-500 hover:underline" href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API#web_storage_concepts_and_usage" target="_blank">
-    For more information on localStorage
-    <ExternalLink size="16" />
+        {$locale.about_content.localstorage_link[$lang]}
+        <ExternalLink size="16" />
     <div class="arrow bg-surface-100-800-token" />
     </a>
 </div>
 
 <div class="card pr-4 pl-4 pb-4">
     <div class="card-header">
-        <h1 class="h1">Brewskie</h1>
-        <p class="text-white/50">Install apps and packages quickly and easily, powered by Homebrew.</p>
+        <h1 class="h1">
+            {$locale.title.brewskie[$lang]}
+        </h1>
+        <p class="text-white/50">
+            {$locale.title.desc[$lang]}Homebrew.
+        </p>
     </div>
     <p>
-        Welcome to Brewskie, a tool for quickly and easily getting started with a new machine, not-too-unlike
+        {$locale.about_content.welcome[$lang]}
         <a class="font-medium text-secondary-600 dark:text-secondary-500 hover:underline" href="https://ninite.com/" target="_blank">
             Ninite
         </a>
-        but now-- for macOS!
+        {$locale.about_content.welcome_now[$lang]}
     </p>
 
-    <h3 class="h3 text-xl">How to use:</h3>
+    <h3 class="h3 text-xl">
+        {$locale.about_content.how_to.title[$lang]}
+    </h3>
         <ol class="list-decimal pl-8">
             <li>
                 <span class="text-secondary-500">
-                    Select apps and packages you'd like to install.
+                    {$locale.about_content.how_to.step1.title[$lang]}
                 </span>
                 <p class="text-white/60">
-                    Alternatively, you can also search for them in the search bar. On desktop, little chips will appear and show the name of the Brew token of the corresponding cask or formula.
-                    Selections will persist between uses of the site.
+                    {$locale.about_content.how_to.step1.detail[$lang]}
                     <button class="text-secondary-500" use:popup={localstorageExplain}>
                         <HelpCircle size="16" />
                     </button>
@@ -51,14 +56,13 @@
             </li>
             <li>
                 <span class="text-secondary-500">
-                    Download the script and review it!
+                    {$locale.about_content.how_to.step2.title[$lang]}
                 </span>
                 <p class="text-white/60">
-                    Press the orange <span class="text-primary-600">Done</span> button to download the script.
-                    I strongly encourage you to read its contents before running it, make sure you understand what you run, and stop if you don't feel comfortable with running it.
-                    The script installs Homebrew if your machine doesn't have it already,
-                    writes a <span class="text-secondary-700">brewfile</span> into /tmp/brewskie,
-                    and attempts to run it using
+                    {$locale.about_content.how_to.step2.detail_1[$lang]}<span class="text-primary-600">{$locale.download_brewfile[$lang]}</span>
+                    {$locale.about_content.how_to.step2.detail_2[$lang]}
+                    <span class="text-secondary-700">brewfile</span>
+                    {$locale.about_content.how_to.step2.detail_3[$lang]}
                     <a class="text-tertiary-600 inline-flex items-center gap-1 font-medium hover:underline" href="https://docs.brew.sh/Manpage#bundle-subcommand">
                         brew bundle --file=/tmp/brewskie
                         <ExternalLink size="16" />
@@ -67,23 +71,21 @@
             </li>
             <li>
                 <span class="text-secondary-500">
-                    Make the script executable and run it!
+                    {$locale.about_content.how_to.step3.title[$lang]}
                 </span>
                 <p class="text-white/60">
-                    By default, you can't run the script after downloading it --
-                    you have to expressly make it executable.
-                    This is mainly a security measure, and we are all grateful for it.
+                    {$locale.about_content.how_to.step3.detail_1[$lang]}
                     <a class="inline-flex items-center gap-1 font-medium text-tertiary-600 hover:underline" href="https://support.apple.com/en-gb/guide/terminal/apdd100908f-06b3-4e63-8a87-32e71241bab4/mac" target="_blank">
-                        Please follow Apple's instructions for making a script executable.
+                        {$locale.about_content.how_to.step3.link[$lang]}
                         <ExternalLink size="16" />
                     </a><br>
-                    Run it as per the instructions, follow the prompts, and within a few minutes you should have all of your selected Brews installed! 
+                    {$locale.about_content.how_to.step3.detail_2[$lang]}
                 </p>
             </li>
         </ol>
         <div class="card-footer inline-flex gap-2 justify-between w-full pr-6">
             <span>
-                Made by Daniel Moshe 🤓
+                {$locale.about_content.credit[$lang]}
             </span>
             <a href="https://github.com/oxyCabhru/brewskie" target="_blank">
                 <button class="btn-icon btn-icon-sm variant-ghost-secondary">
