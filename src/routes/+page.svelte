@@ -147,13 +147,13 @@
         </div>
         {#if $page_options.pagination}
         <Paginator
-            class="variant-glass-primary paginator"
+            class={`variant-glass-primary paginator ${$lang == "he" ? "rtl-fix" : ""}`}
             bind:settings={pagination}
             select="select w-min
             border border-surface-300 text-gray-900 text-sm rounded-lg focus:ring-surface-500 focus:border-surface-500 block w-full p-2.5 dark:bg-primary-700 dark:border-surface-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-surface-500
             variant-soft-surface
             "
-            buttonClasses="btn-icon variant-filled-surface "
+            buttonClasses={`btn-icon variant-filled-surface`}
             justify="justify-around"
             amountText="Brews"
             buttonTextNext={"👉"}
@@ -268,6 +268,9 @@
     }
     :global(.input-chips) {
         display: none;
+    }
+    :global(.rtl-fix) {
+        direction: ltr !important;
     }
     @media only screen and (min-width: 1024px) {
         main {
