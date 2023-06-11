@@ -1,5 +1,5 @@
 <script lang="ts">
-    const { millify } = require("millify");
+    import { millify } from "millify";
 	import { user_choice, lang } from "$lib/store";
     import locale from "$lib/localization";
 	import { Download, ExternalLink } from "lucide-svelte";
