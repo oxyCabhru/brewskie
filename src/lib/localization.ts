@@ -340,15 +340,15 @@ export default readable(
             },
         toggles: {
                 language: {
-                    en: "Toggle Language",
+                    en: "Change Language",
                     he: "החלף שפה",
                 },
                 autocomplete: {
-                    en: "Toggle Autocompletions",
+                    en: "Autocompletions",
                     he: "השלמה אוטומטית",
                 },
                 pagination: {
-                    en: "Toggle Pagination Bar",
+                    en: "Pagination Bar",
                     he: "החלפה בין עמודים",
                 },
             },
