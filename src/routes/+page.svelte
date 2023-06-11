@@ -192,7 +192,7 @@
                     aria-label="Toggle Autocompletions"
                     use:popup={autocompletionsWarning}
                     class={`btn flex flex-col ${$page_options.autocomplete ? "variant-ghost-secondary" : ""}`}
-                    on:click={() => {$page_options.autocomplete = !$page_options.autocomplete}}>
+                    on:click={() => {$page_options.autocomplete = !$page_options.autocomplete; $page_options.autocomplete ? location.reload() : null;}}>
                     <TextCursorInput size="18" />
                     <span class="hidden lg:block">
                         {$locale.toggles.autocomplete[$lang]}

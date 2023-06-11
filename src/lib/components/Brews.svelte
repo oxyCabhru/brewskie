@@ -1,4 +1,5 @@
 <script lang="ts">
+    import millify from "millify";
 	import { user_choice, lang } from "$lib/store";
     import locale from "$lib/localization";
 	import { Download, ExternalLink } from "lucide-svelte";
@@ -40,7 +41,7 @@
                     <span
                         class="badge variant-filled-primary"
                     title={$locale.downloads_tooltip[$lang]}>
-                    {parseInt(cask.count)}
+                    {millify(parseInt(cask.count))}
                     <Download style="display: inline" size={18} />
                 </span>
                 </div>
@@ -55,7 +56,7 @@
                     <span
                         class="badge variant-filled-primary"
                         title={$locale.downloads_tooltip[$lang]}>
-                        {parseInt(api_response.analytics.install["30d"][api_response.token])}
+                        {millify(parseInt(api_response.analytics.install["30d"][api_response.token]))}
                         <Download style="display: inline" size={18} />
                     </span>
                 </div>
@@ -84,7 +85,7 @@
                 <span
                 class="badge variant-filled-primary"
                 title={$locale.downloads_tooltip[$lang]}>
-                {parseInt(pkg.count)}
+                {millify(parseInt(pkg.count))}
                 <Download style="display: inline" size={18} />
             </span>
             </div>
@@ -99,7 +100,7 @@
                     <span
                         class="badge variant-filled-primary"
                         title={$locale.downloads_tooltip[$lang]}>
-                        {parseInt(formula.analytics.install_on_request["30d"][formula.name])}
+                        {millify(parseInt(formula.analytics.install_on_request["30d"][formula.name]))}
                         <Download style="display: inline" size={18} />
                     </span>
                 </div>

@@ -50,7 +50,7 @@ export async function brew_fetch_formula(slug: string) {
         return json as FormulaApiResponse;
     } catch (err: any) {
         try {
-            const santizied = (BREW_FORMULA_API + slug + ".json").replace(/[0-9]/g, "");
+            const santizied = (BREW_FORMULA_API + slug + ".json")//.replace(/[0-9]/g, "");
             const response = await axios.get(santizied)
             return response.data as FormulaApiResponse;
         } catch {

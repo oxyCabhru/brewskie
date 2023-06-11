@@ -2,7 +2,8 @@ import type { UserChoices } from "$lib/types";
 export function write_brewfile(usr: UserChoices): string {
     let buffer = `
 # This Brewfile was generated automatically via Brewskie on ${new Date().toISOString()}
-# Feel free to tweak it as needed, the service is still a WIP!\n`;
+# Feel free to tweak it as needed, the service is still a WIP!
+brew tap homebrew/cask-versions\n`;
     const usr_casks = usr.casks.map(csk => `cask "${csk}"`)
     const usr_pkgs = usr.packages.map(pkg => `brew "${pkg}"`)
     const casks = usr_casks.join('\n');
