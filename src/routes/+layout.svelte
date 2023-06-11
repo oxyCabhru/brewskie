@@ -7,7 +7,7 @@
 	import '../app.postcss';
 	import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
 	import { AppShell, Toast, Modal, storePopup, Drawer } from '@skeletonlabs/skeleton';
-	import { active_drawer, lang, user_choice } from '$lib/store';
+	import { active_drawer, lang, page_options, user_choice } from '$lib/store';
 	import locale from "$lib/localization";
 	import { Info } from 'lucide-svelte';
 	import Sixpacks from '$lib/components/Sixpacks.svelte';
@@ -18,7 +18,8 @@
 	onMount(() => {
 		lang.subscribe(lang => {
 			document.documentElement.dir = lang == "he" ? "rtl" : "ltr";
-		})
+		});
+		if ($page_options.first_use) openAbout();
 	})
 </script>
 <svelte:head>

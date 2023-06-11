@@ -1,6 +1,6 @@
 import { drawerStore, type ModalSettings, modalStore } from "@skeletonlabs/skeleton";
 import { brew_fetch_cask, brew_fetch_formula } from "$lib/brew_sh";
-import { active_drawer, user_choice } from "$lib/store";
+import { active_drawer, page_options, user_choice } from "$lib/store";
 import About from "$lib/components/About.svelte";
 import type { CaskApiResponse, FormulaApiResponse } from "$lib/types";
 
@@ -55,6 +55,10 @@ export function view_selections() {
 };
 
 export function openAbout() {
+    page_options.update(val => {
+        val.first_use = false;
+        return val;
+    });
     const modal: ModalSettings = {
         type: 'component',
         component: {

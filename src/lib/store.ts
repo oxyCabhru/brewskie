@@ -15,6 +15,7 @@ export let active_drawer: Writable<string | null> = writable(null);
 
 export let page_options = localStorageStore("page_options", 
     {
+        first_use: true,
         autocomplete: false,
         pagination: true,
         options: true
