@@ -183,7 +183,7 @@
                             $lang = "en"
                         }
                     }}>
-                <Globe />
+                <Globe size="18" />
                 <span class="hidden lg:block">
                     {$locale.toggles.language[$lang]}
                 </span>
