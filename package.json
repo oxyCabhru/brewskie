@@ -37,10 +37,8 @@
 	"dependencies": {
 		"@floating-ui/dom": "^1.2.9",
 		"@sveltejs/adapter-node": "^1.2.4",
-		"@vercel/analytics": "^1.0.1",
 		"axios": "^1.4.0",
 		"axios-cache-interceptor": "^1.1.1",
-		"firebase": "^9.22.1",
 		"lucide-svelte": "^0.224.0",
 		"millify": "^6.1.0"
 	}
