@@ -1,23 +1,37 @@
 import got from 'got';
 import type { ApiResponse, CaskInstalls, FormulaInstalls } from './types';
-const URL_cask_installs =           "https://formulae.brew.sh/api/analytics/cask-install/30d.json";
-const URL_formula_installs =        "https://formulae.brew.sh/api/analytics/install-on-request/30d.json";
-const BASEURL_cask_api =            "https://formulae.brew.sh/api/cask/";
-const BASEURL_formula_api =         "https://formulae.brew.sh/api/formula/";
+const URL_cask_installs =       "https://formulae.brew.sh/api/analytics/cask-install/30d.json";
+const URL_formula_installs =    "https://formulae.brew.sh/api/analytics/install-on-request/30d.json";
+const URL_cask_api =            (token: string) => 
+                                    new URL(`${token}.json`, "https://formulae.brew.sh/api/cask/");
+const URL_formula_api =         (token: string) => 
+                                    new URL(`${token}.json`, "https://formulae.brew.sh/api/formula/");
+const stupid_cache = new Map();
+stupid_cache.set("TIMESTAMP", Date.now());
+const TIMEOUT = 86_400_000; // milliseconds per day
+function cache_refresh() {
+    if (Date.now() - stupid_cache.get("TIMESTAMP") >= TIMEOUT ) {
+        stupid_cache.clear();
+        stupid_cache.set("TIMESTAMP", Date.now());
+    };
+}
 
 export async function get_latest_cask_installs(): Promise<CaskInstalls> {
-    const res = await got(URL_cask_installs);
-    return JSON.parse(res.body);
+    cache_refresh();
+    const res = await got(URL_cask_installs, {cache: stupid_cache}).json();
+    return res as CaskInstalls;
 };
 
 export async function get_latest_formula_installs(): Promise<FormulaInstalls> {
-    const res = await got(URL_formula_installs);
-    return JSON.parse(res.body);
+    cache_refresh();
+    const res = await got(URL_formula_installs, {cache: stupid_cache}).json();
+    return res as FormulaInstalls;
 }
 
 export async function fetch_cask_api(token: string): Promise<ApiResponse> {
-    const url = new URL(`${token}.json`, BASEURL_cask_api);
-    const res = JSON.parse((await got(url)).body);
+    // cache_refresh();
+    const url = URL_cask_api(token);
+    const res = await got(url, {cache: stupid_cache}).json() as any;
     const data: ApiResponse = {
         display_name: res.name[0],
         token: res.token,
@@ -29,8 +43,9 @@ export async function fetch_cask_api(token: string): Promise<ApiResponse> {
 };
 
 export async function fetch_formula_api(token: string): Promise<ApiResponse> {
-    const url = new URL(`${token}.json`, BASEURL_formula_api);
-    const res = JSON.parse((await got(url)).body);
+    // cache_refresh();
+    const url = URL_formula_api(token);
+    const res = await got(url, {cache: stupid_cache}).json() as any;
     const data: ApiResponse = {
         display_name: res.name,
         token: res.token,

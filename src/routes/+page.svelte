@@ -1,1 +1,5 @@
-<h1>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nisi voluptatem exercitationem error ducimus fuga distinctio itaque repellat, placeat sapiente tenetur autem quidem deleniti enim sed quasi perferendis maiores ex animi.</h1>
+<div class="content">
+    <h1>brewskie</h1>
+    <h3>here will be a selection of brews for different use cases, basically the premade brewskies</h3>
+</div>
+<a href="/browse"><button>browse!</button></a>

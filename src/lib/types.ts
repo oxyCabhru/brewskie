@@ -24,10 +24,16 @@ export type FormulaInstalls = {
         percent: string;
     }[]
 }
+
 export type ApiResponse = {
     display_name: string,
     token: string,
     homepage: string,
     installs: number,
     description: string,
+}
+
+export type SelectedBrews = {
+    casks: string[],
+    formulae: string[],
 }

@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css?family=Geologica&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Alef&display=swap');
+
+body {
+    font-family: Geologica;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+body[theme="light"] {
+    background: gray;
+    color: red;
+}
+body[theme="dark"] {
+    background: black;
+    color: white;
+}
+
+.heb * {
+    direction: rtl;
+    font-family: Alef;
+}
+
