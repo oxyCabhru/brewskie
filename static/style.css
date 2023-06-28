@@ -1,18 +1,43 @@
 @import url('https://fonts.googleapis.com/css?family=Geologica&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Alef&display=swap');
 
-body {
-    font-family: Geologica;
-    overflow-y: hidden;
-    overflow-x: hidden;
+:root {
+    --falu-red: #6f1d1bff;
+    --lion: #bb9457ff;
+    --bistre: #432818ff;
+    --brown: #99582aff;
+    --peach: #ffe6a7ff;
+
 }
+
+body {
+    margin: 0;
+    font-family: Geologica;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+}
+
 body[theme="light"] {
-    background: gray;
-    color: red;
+    --primary: var(--bistre);
+    --secondary: var(--falu-red);
+    --bg: var(--lion);
+    background: var(--bg);
+    color: var(--primary);
 }
 body[theme="dark"] {
-    background: black;
-    color: white;
+    --primary: var(--peach);
+    --secondary: var(--lion);
+    --bg: var(--bistre);
+    background: var(--bg);
+    color: var(--primary);
+}
+
+.i {
+    vertical-align: middle;
+    display: inline-block;
+    height: 1em;
+    width: 1em;
 }
 
 .heb * {

@@ -29,7 +29,7 @@ export type ApiResponse = {
     display_name: string,
     token: string,
     homepage: string,
-    installs: number,
+    installs: string,
     description: string,
 }
 

@@ -1,5 +1,4 @@
 <script lang="ts">
-    import "../app.css";
     import { selected_brews } from "$lib/store";
     import { theme, theme_handler, lang } from "$lib/user_prefs";
     import locale from "$lib/localization";
@@ -30,35 +29,30 @@
     </div>
 </div>
 
-
 <style>
     #brewskie {
-        /* outline: 1px solid white; */
+        flex-grow: 1;
         padding: 1rem;
-        display: grid;
-        grid-template-columns: auto;
-        grid-template-rows: 1fr 7fr;
-        gap: .75rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
     }
     #content {
-        /* outline: 3px solid green; */
         display: grid;
         grid-template-columns: 1fr 4fr;
-        gap: .5rem;
+        gap: 0.5rem;
+        flex-grow: 1;
     }
     #topbar {
-        /* outline: 1px solid red; */
     }
     #sidebar {
-        padding: .5rem .75rem;
+        padding: 0.5rem 0.75rem;
         border: 3px solid gray;
-        border-radius: .6rem;
-        /* outline: 1px solid blue; */
+        border-radius: 0.6rem;
     }
     main {
         border: 3px solid gray;
-        border-radius: .6rem;
-        /* outline: 1px solid yellow; */
+        border-radius: 0.6rem;
+        overflow-y: auto;
     }
-
 </style>
