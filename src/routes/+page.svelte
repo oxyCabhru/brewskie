@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Brew from "../components/Brew.svelte";
+    import Brew from "../lib/cmps/Brew.svelte";
 </script>
 
 <div class="content">

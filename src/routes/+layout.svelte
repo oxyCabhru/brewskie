@@ -1,4 +1,5 @@
 <script lang="ts">
+    import "../app.css";
     import { selected_brews } from "$lib/store";
     import { theme, theme_handler, lang } from "$lib/user_prefs";
     import locale from "$lib/localization";
@@ -14,18 +15,20 @@
             {$locale.title.brewskie[$lang]}
         </h1>
         <h2 class="text-xl opacity-70">
-            {$locale.title.desc[$lang]} <a href="https://brew.sh">Homebrew.</a>
+            {$locale.title.desc[$lang]}
+            <a class="link" href="https://brew.sh">Homebrew</a>.
         </h2>
     </div>
     <div id="content">
         <div id="sidebar">
             {$locale.about_content.welcome[$lang]}
-            <a href="https://brew.sh">Homebrew.</a>
+            <a class="link" href="https://brew.sh">Homebrew</a>
             {$locale.about_content.welcome_now[$lang]}
+            {JSON.stringify($selected_brews)}
         </div>
-        <main>
+        <div id="page">
             <slot />
-        </main>
+        </div>
     </div>
 </div>
 
@@ -42,6 +45,7 @@
         grid-template-columns: 1fr 4fr;
         gap: 0.5rem;
         flex-grow: 1;
+        overflow-y: auto;
     }
     #topbar {
     }
@@ -50,9 +54,9 @@
         border: 3px solid gray;
         border-radius: 0.6rem;
     }
-    main {
+    #page {
+        overflow-y: auto;
         border: 3px solid gray;
         border-radius: 0.6rem;
-        overflow-y: auto;
     }
 </style>

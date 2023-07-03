@@ -1,6 +1,6 @@
-import got from 'got';
+import got, { type OptionsOfJSONResponseBody, type OptionsOfTextResponseBody, type OptionsOfUnknownResponseBody } from 'got';
 import millify from 'millify';
-import type { ApiResponse, CaskInstalls, FormulaInstalls } from './types';
+import type { BrewMetadata, CaskInstalls, FormulaInstalls } from './types';
 const URL_cask_installs = "https://formulae.brew.sh/api/analytics/cask-install/30d.json";
 const URL_formula_installs = "https://formulae.brew.sh/api/analytics/install-on-request/30d.json";
 const URL_cask_api = (token: string) =>
@@ -29,11 +29,19 @@ export async function get_latest_formula_installs(): Promise<FormulaInstalls> {
     return res as FormulaInstalls;
 }
 
-export async function fetch_cask_api(token: string): Promise<ApiResponse> {
-    // cache_refresh();
-    const url = URL_cask_api(token);
+const sanitized_token = (token: string) => {
+    const token_split = token.split("/");
+    if (token_split.length > 1) {
+        return token_split.slice(-1)[0].replaceAll(/\d/g, "");
+    } else {
+        return token_split[0]
+    }
+}
+
+export async function fetch_cask_api(token: string): Promise<BrewMetadata> {
+    const url = URL_cask_api(sanitized_token(token));
     const res = await got(url, { cache: stupid_cache }).json() as any;
-    const data: ApiResponse = {
+    const data: BrewMetadata = {
         display_name: res.name[0],
         token: res.token,
         homepage: res.homepage,
@@ -43,11 +51,10 @@ export async function fetch_cask_api(token: string): Promise<ApiResponse> {
     return data;
 };
 
-export async function fetch_formula_api(token: string): Promise<ApiResponse> {
-    // cache_refresh();
+export async function fetch_formula_api(token: string): Promise<BrewMetadata> {
     const url = URL_formula_api(token);
     const res = await got(url, { cache: stupid_cache }).json() as any;
-    const data: ApiResponse = {
+    const data: BrewMetadata = {
         display_name: res.name,
         token: res.token,
         homepage: res.homepage,

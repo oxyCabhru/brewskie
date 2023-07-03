@@ -1,3 +1,18 @@
+export type Installs = {
+    category: "cask_install" | "formula_install_on_request",
+    total_items: number,
+    start_date: string,
+    end_date: string,
+    total_count: number,
+    items: {
+        number: number;
+        cask?: string;
+        formula?: string;
+        count: string;
+        percent: string;
+    }[]
+}
+
 export type CaskInstalls = {
     category: "cask_install",
     total_items: number,
@@ -25,7 +40,7 @@ export type FormulaInstalls = {
     }[]
 }
 
-export type ApiResponse = {
+export type BrewMetadata = {
     display_name: string,
     token: string,
     homepage: string,
