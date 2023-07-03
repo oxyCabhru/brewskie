@@ -56,7 +56,7 @@ export async function fetch_formula_api(token: string): Promise<BrewMetadata> {
     const res = await got(url, { cache: stupid_cache }).json() as any;
     const data: BrewMetadata = {
         display_name: res.name,
-        token: res.token,
+        token: res.name,
         homepage: res.homepage,
         installs: millify(res.analytics.install["30d"][res.name]),
         description: res.desc,

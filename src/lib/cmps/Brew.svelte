@@ -1,9 +1,13 @@
 <script lang="ts">
-    import { selected_brews } from "$lib/store";
+    import { select_brew, unselect_brew, selected_brews } from "$lib/selected_brews"
     import type { BrewMetadata } from "$lib/types";
     export let brew: BrewMetadata;
     export let type: "cask" | "formula";
-    let selected = $selected_brews.casks.includes(brew.token);
+    let selected: boolean;
+    $: selected = (type == "cask") ?
+        $selected_brews.casks.includes(brew.token)
+        :
+        $selected_brews.formulae.includes(brew.token);
 </script>
 
 <div
@@ -13,18 +17,11 @@
 >
     <div class="card-body">
         <div class="card-title">
-            <div class="badge badge-outline">{selected}</div>
             <button
                 class="btn"
-                on:click={() => {
-                    selected_brews.update((val) => {
-                        val.casks.push(brew.token);
-                        return val;
-                    });
-                    // $selected_brews.casks.push(brew.token);
-                }}
+                on:click={selected ? unselect_brew : select_brew }
             >
-                +
+                { selected ? "-" : "+" }
             </button>
             <a href={brew.homepage} class="hover-link">
                 {brew.display_name}

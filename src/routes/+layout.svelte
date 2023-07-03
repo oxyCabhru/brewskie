@@ -1,6 +1,6 @@
 <script lang="ts">
     import "../app.css";
-    import { selected_brews } from "$lib/store";
+    import { selected_brews } from "$lib/selected_brews";
     import { theme, theme_handler, lang } from "$lib/user_prefs";
     import locale from "$lib/localization";
     import { onMount } from "svelte";
