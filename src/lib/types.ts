@@ -1,46 +1,40 @@
-export type Installs = {
-    category: "cask_install" | "formula_install_on_request",
-    total_items: number,
-    start_date: string,
-    end_date: string,
-    total_count: number,
-    items: {
-        number: number;
-        cask?: string;
-        formula?: string;
-        count: string;
-        percent: string;
-    }[]
+export enum BrewType {
+    Cask = "cask",
+    Formula = "formula",
 }
 
-export type CaskInstalls = {
-    category: "cask_install",
+export type Installs<T extends BrewType> = {
     total_items: number,
     start_date: string,
     end_date: string,
     total_count: number,
-    items: {
-        number: number;
-        cask: string;
-        count: string;
-        percent: string;
-    }[]
-}
-export type FormulaInstalls = {
-    category: "formula_install_on_request",
-    total_items: number,
-    start_date: string,
-    end_date: string,
-    total_count: number,
-    items: {
-        number: number;
-        formula: string;
-        count: string;
-        percent: string;
-    }[]
-}
+} & (T extends BrewType.Cask ?
+    {
+        category: "cask_install";
+        items: {
+            number: number;
+            count: string;
+            percent: string;
+            cask: string;
+            formula?: never;
+        }[]
+    }
+    :
+    {
+        category: "formula_install_on_request";
+        items: {
+            number: number;
+            count: string;
+            percent: string;
+            formula: string;
+            cask?: never;
+        }[]
+
+    }
+    )
 
 export type BrewMetadata = {
+    type: BrewType,
     display_name: string,
     token: string,
     homepage: string,

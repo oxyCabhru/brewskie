@@ -1,39 +1,42 @@
 <script lang="ts">
-    import { select_brew, unselect_brew, selected_brews } from "$lib/selected_brews"
-    import type { BrewMetadata } from "$lib/types";
+    import {
+        select_brew,
+        unselect_brew,
+        selected_brews,
+    } from "$lib/selected_brews";
+    import { BrewType, type BrewMetadata } from "$lib/types";
+    import { onMount } from "svelte";
     export let brew: BrewMetadata;
-    export let type: "cask" | "formula";
     let selected: boolean;
-    $: selected = (type == "cask") ?
-        $selected_brews.casks.includes(brew.token)
-        :
-        $selected_brews.formulae.includes(brew.token);
+    $: selected =
+        brew.type == BrewType.Cask
+            ? $selected_brews.casks.includes(brew.token)
+            : $selected_brews.formulae.includes(brew.token);
 </script>
 
 <div
     class="card card-compact shadow-xl"
-    data-type={type}
+    data-type={brew.type == BrewType.Cask ? "cask" : "formula"}
     data-token={brew.token}
 >
     <div class="card-body">
         <div class="card-title">
-            <button
-                class="btn"
-                on:click={selected ? unselect_brew : select_brew }
-            >
-                { selected ? "-" : "+" }
-            </button>
             <a href={brew.homepage} class="hover-link">
                 {brew.display_name}
                 <ion-icon name="link-outline" class="i" />
             </a>
-            <span
-                class="badge badge-outline ml-auto"
-                title="Recent downloads count"
-            >
-                <ion-icon name="arrow-down-outline" />
-                {brew.installs}
-            </span>
+            <div class="ml-auto">
+                <span class="badge badge-outline">
+                    <ion-icon name="arrow-down-outline" />
+                    {brew.installs}
+                </span>
+                <button
+                    class="badge badge-outline"
+                    on:click={selected ? unselect_brew : select_brew}
+                >
+                    {selected ? "- Unselect" : "+ Select"}
+                </button>
+            </div>
         </div>
         <p>
             {brew.description}
@@ -62,6 +65,8 @@
         background: var(--alt-bg);
         transform: translateY(-100%);
     } */
+    #downloads {
+    }
     a.hover-link > ion-icon {
         transform: translateX(-2.5px);
         opacity: 0;

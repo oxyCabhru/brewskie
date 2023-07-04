@@ -18,7 +18,7 @@
                         </div>
                     </div>
                 {:then api_response}
-                    <Brew brew={api_response} type="cask" />
+                    <Brew brew={api_response} />
                 {:catch err}
                     <error token={app.token} reason={err}>
                         {app.token} metadata couldn't be loaded despite the sanitation
@@ -39,7 +39,7 @@
                 {#await pkg.api}
                     loading {pkg.token}..
                 {:then api_response}
-                    <Brew brew={api_response} type="formula" />
+                    <Brew brew={api_response} />
                 {:catch err}
                     <error token={pkg.token} reason={err}>
                         {pkg.token} metadata couldn't be loaded despite the sanitation
