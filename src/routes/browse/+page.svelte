@@ -4,11 +4,11 @@
     export let data;
 </script>
 
-<div class="brews">
+<div class="lg:px-2 lg:py-4">
     <div class="card">
         <div class="card-title">Casks</div>
         <div class="card-title">Your typical applications.</div>
-        <div class="container">
+        <div class="container gap-2 lg:gap-4 lg:p-4 grid lg:flex lg:flex-row lg:flex-wrap">
             {#each data.stream.casks as app}
                 {#await app.api}
                     <div class="card shadow">
@@ -34,7 +34,7 @@
         <div class="card-title">
             Command-line tools, applications, and runtimes.
         </div>
-        <div class="container">
+        <div class="container gap-4 p-4 grid lg:flex lg:flex-row lg:flex-wrap">
             {#each data.stream.formulae as pkg}
                 {#await pkg.api}
                     loading {pkg.token}..
@@ -55,14 +55,5 @@
 <style>
     error {
         display: none;
-    }
-    .brews {
-        padding: 0.5rem 1rem;
-    }
-    .container {
-        padding: 1rem;
-        display: flex;
-        flex-flow: row wrap;
-        gap: 1rem;
     }
 </style>
