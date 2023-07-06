@@ -4,6 +4,8 @@
     import { theme, theme_handler, lang } from "$lib/user_prefs";
     import locale from "$lib/localization";
     import { onMount } from "svelte";
+    import { Buffer } from "buffer";
+    globalThis.Buffer = Buffer
     onMount(() => {
         theme_handler($theme);
     });

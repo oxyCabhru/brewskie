@@ -34,6 +34,7 @@ export type Installs<T extends BrewType> = {
     )
 
 export type BrewMetadata = {
+    icon?: string, //base64 of the image
     type: BrewType,
     display_name: string,
     token: string,

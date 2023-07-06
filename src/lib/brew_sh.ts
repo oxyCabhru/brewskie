@@ -4,9 +4,11 @@ import { BrewType, type BrewMetadata, type Installs } from './types';
 const URL_cask_installs = "https://formulae.brew.sh/api/analytics/cask-install/30d.json";
 const URL_formula_installs = "https://formulae.brew.sh/api/analytics/install-on-request/30d.json";
 const URL_cask_api = (token: string) =>
-    new URL(`${token}.json`, "https://formulae.brew.sh/api/cask/");
+new URL(`${token}.json`, "https://formulae.brew.sh/api/cask/");
 const URL_formula_api = (token: string) =>
-    new URL(`${token}.json`, "https://formulae.brew.sh/api/formula/");
+new URL(`${token}.json`, "https://formulae.brew.sh/api/formula/");
+const URL_get_google_cached_favicon = (homepage: string) =>
+("https://s2.googleusercontent.com/s2/favicons?domain=" + homepage);
 const stupid_cache = new Map();
 stupid_cache.set("TIMESTAMP", Date.now());
 const TIMEOUT = 86_400_000; // milliseconds per day
@@ -41,7 +43,10 @@ const sanitized_token = (token: string) => {
 export async function fetch_cask_api(token: string): Promise<BrewMetadata> {
     const url = URL_cask_api(sanitized_token(token));
     const res = await got(url, { cache: stupid_cache }).json() as any;
+    const icon_url = URL_get_google_cached_favicon(res.homepage);
+    const binary = (await got(icon_url)).rawBody.toString('base64');
     const data: BrewMetadata = {
+        icon: new URL(res.homepage).host == "github.com" ? undefined : binary,
         type: BrewType.Cask,
         display_name: res.name[0],
         token: res.token,
@@ -55,7 +60,10 @@ export async function fetch_cask_api(token: string): Promise<BrewMetadata> {
 export async function fetch_formula_api(token: string): Promise<BrewMetadata> {
     const url = URL_formula_api(token);
     const res = await got(url, { cache: stupid_cache }).json() as any;
+    const icon_url = URL_get_google_cached_favicon(res.homepage);
+    const binary = (await got(icon_url)).rawBody.toString('base64');
     const data: BrewMetadata = {
+        icon: new URL(res.homepage).host == "github.com" ? undefined : binary,
         type: BrewType.Formula,
         display_name: res.name,
         token: res.name,

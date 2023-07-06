@@ -12,7 +12,7 @@ export function select_brew(event?: MouseEvent, brew_token?: string, brew_type?:
     let token: string;
     let type: string;
     if (event) {
-        const target = (event?.target as any).parentElement.parentElement.parentElement.parentElement.parentElement;
+        const target = (event?.target as any).parentElement.parentElement.parentElement.parentElement;
         token = target.dataset.token;
         type = target.dataset.type;
     } else if (brew_token && brew_type) {
@@ -34,7 +34,7 @@ export function unselect_brew(event?: MouseEvent, brew_token?: string, brew_type
     let token: string;
     let type: string;
     if (event) {
-        const target = (event?.target as any).parentElement.parentElement.parentElement.parentElement.parentElement;
+        const target = (event?.target as any).parentElement.parentElement.parentElement.parentElement;
         token = target.dataset.token;
         type = target.dataset.type;
     } else if (brew_token && brew_type) {

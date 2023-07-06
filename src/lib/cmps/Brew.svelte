@@ -5,8 +5,15 @@
         selected_brews,
     } from "$lib/selected_brews";
     import { BrewType, type BrewMetadata } from "$lib/types";
-    import { onMount } from "svelte";
     export let brew: BrewMetadata;
+    let icon_url: string;
+    if (brew.icon) {
+        icon_url = URL.createObjectURL(
+            new Blob([
+                Buffer.from(brew.icon, "base64")
+            ])
+        );
+    }
     let selected: boolean;
     $: selected =
         brew.type == BrewType.Cask
@@ -19,13 +26,22 @@
     data-type={brew.type == BrewType.Cask ? "cask" : "formula"}
     data-token={brew.token}
 >
-    <div class="card-body">
-        <div class="card-title">
+<div class="card-body">
+    <div class="card-title">
+        {#if brew.icon}
+        <span class="brew-icon">
+            <img alt="" src={icon_url} width=16 height=16 />
+        </span>
+        {:else}
+        <span class="brew-icon">
+            <ion-icon name="logo-github" />
+        </span>
+        {/if}
             <a href={brew.homepage} class="hover-link">
                 {brew.display_name}
                 <ion-icon name="link-outline" class="i" />
             </a>
-            <div class="ml-auto">
+            <div class="ml-auto flex gap-2">
                 <span class="badge badge-outline">
                     <ion-icon name="arrow-down-outline" />
                     {brew.installs}
@@ -48,22 +64,14 @@
     .card {
         background: var(--alt-bg);
         flex-grow: 1;
-        /* isolation: isolate; */
-        /* overflow: hidden; */
     }
-    /* .card:hover {
-        border-top-left-radius: 0;
+
+    /* .brew-icon {
+        filter: saturate(0);
+        transition: filter 150ms ease-in;
     }
-    .card:hover::before {
-        content: attr(data-type);
-        position: absolute;
-        z-index: 1;
-        padding: 0 1rem;
-        border-top-left-radius: 0.75rem;
-        border-top-right-radius: 0.75rem;
-        text-transform: uppercase;
-        background: var(--alt-bg);
-        transform: translateY(-100%);
+    .card:hover .brew-icon {
+        filter: saturate(100%);
     } */
     #downloads {
     }
