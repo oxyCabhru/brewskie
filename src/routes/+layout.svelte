@@ -5,7 +5,9 @@
     import locale from "$lib/localization";
     import { onMount } from "svelte";
     import { Buffer } from "buffer";
-    globalThis.Buffer = Buffer
+    import Topbar from "$lib/cmps/Topbar.svelte";
+    import Sidebar from "$lib/cmps/Sidebar.svelte";
+    globalThis.Buffer = Buffer;
     onMount(() => {
         theme_handler($theme);
     });
@@ -13,20 +15,11 @@
 
 <div id="brewskie">
     <div id="topbar">
-        <h1 class="text-3xl">
-            {$locale.title.brewskie[$lang]}
-        </h1>
-        <h2 class="text-xl opacity-70">
-            {$locale.title.desc[$lang]}
-            <a class="link" href="https://brew.sh">Homebrew</a>.
-        </h2>
+        <Topbar />
     </div>
     <div id="content">
         <div id="sidebar">
-            {$locale.about_content.welcome[$lang]}
-            <a class="link" href="https://brew.sh">Homebrew</a>
-            {$locale.about_content.welcome_now[$lang]}
-            {JSON.stringify($selected_brews)}
+            <Sidebar />
         </div>
         <div id="page">
             <slot />
@@ -58,6 +51,7 @@
     }
     #page {
         overflow-y: auto;
+        overflow-x: hidden;
         border: 3px solid gray;
         border-radius: 0.6rem;
     }

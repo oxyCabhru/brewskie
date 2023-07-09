@@ -6,11 +6,11 @@ import {
     get_latest_formula_installs,
 } from "$lib/brew_sh";
 
-async function fetch_resources(url: URL, factor: number = 10) {
+async function fetch_resources(url: URL, factor: number = 16) {
     let page = Number(url.searchParams.get("page") || 1);
     if (page == 0) page = 1;
-    const casks = await get_latest_cask_installs();
-    const formulae = await get_latest_formula_installs();
+    let casks = await get_latest_cask_installs();
+    let formulae = await get_latest_formula_installs();
     const casks_current_load = casks.items.slice((page - 1) * factor, page * factor);
     const formulae_current_load = formulae.items.slice((page - 1) * factor, page * factor);
     return {
@@ -33,13 +33,13 @@ export async function load({ url }) {
         stream: { //return unresolved promises with their tokens to stream them in
             casks: resources.current.casks.map(app => {
                 return {
-                    api: fetch_cask_api(app.cask),
+                    api: fetch_cask_api(app),
                     token: app.cask
                 }
             }),
             formulae: resources.current.formulae.map(pkg => {
                 return {
-                    api: fetch_formula_api(pkg.formula),
+                    api: fetch_formula_api(pkg),
                     token: pkg.formula
                 }
             })
