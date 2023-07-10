@@ -2,20 +2,14 @@
 @import url('https://fonts.googleapis.com/css?family=Alef&display=swap');
 
 :root {
-    --falu-red: #6f1d1bff;
-    --lion: #bb9457ff;
-    --bistre: #432818ff;
-    --brown: #99582aff;
-    --peach: #ffe6a7ff;
-
-    --orange-crayola: #e63d00;
-    --peach: #f7c59fff;
-    --beige: #efefd0ff;
-    --polynesian-blue: #004e89ff;
-    --lapis-lazuli: #1a659eff;
-
-    --cask: var(--orange-crayola);
-    --formula: var(--lapis-lazuli);
+    --brew-sh-primary: rgb(249, 208, 148);
+    --brew-sh-secondary: rgb(116, 86, 38);
+    --brew-sh-bg: rgb(46, 42, 36);
+    --brew-sh-alt-bg: rgba(75, 75, 75, .2);
+    --brew-sh-link: rgb(190, 134, 45);
+    --brew-sh-link-h: rgb(211, 164, 89);
+    --brew-sh-btn-bg: rgba(162, 107, 20, 0.302);
+    --brew-sh-btn-bg-h: rgba(162, 107, 20, 0.251);
 }
 
 body {
@@ -24,23 +18,17 @@ body {
     height: 100vh;
     width: 100vw;
     display: flex;
+    background: var(--brew-sh-bg);
+    color: var(--brew-sh-primary);
 }
 
-body[theme="light"] {
-    --primary: var(--bistre);
-    --secondary: var(--falu-red);
-    --bg: var(--peach);
-    --alt-bg: var(--lion);
-    background: var(--bg);
-    color: var(--primary);
+a {
+    font-weight: bold;
+    color: var(--brew-sh-link);
+    transition: color 80ms ease-in;
 }
-body[theme="dark"] {
-    --primary: var(--peach);
-    --secondary: var(--lion);
-    --bg: var(--bistre);
-    --alt-bg: var(--falu-red);
-    background: var(--bg);
-    color: var(--primary);
+a:hover {
+    color: var(--brew-sh-link-h);
 }
 
 .i {

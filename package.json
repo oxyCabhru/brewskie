@@ -25,9 +25,9 @@
   },
   "type": "module",
   "dependencies": {
+    "@keyv/redis": "^2.7.0",
     "buffer": "^6.0.3",
     "got": "^12.6.0",
-    "millify": "^6.1.0",
     "svelte-local-storage-store": "^0.5.0"
   }
 }

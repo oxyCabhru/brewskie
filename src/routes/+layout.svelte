@@ -13,15 +13,32 @@
     });
 </script>
 
+<svelte:head>
+    <title>
+        {$locale.title.brewskie[$lang]}
+        {$selected_brews.casks.length > 0 || $selected_brews.formulae.length > 0
+            ? `| ${
+                  $selected_brews.casks.length == 1
+                      ? $locale.title.cask[$lang]
+                      : `${$selected_brews.casks.length} ${$locale.title.casks[$lang]}`
+              } | ${
+                  $selected_brews.formulae.length == 1
+                      ? $locale.title.pkg[$lang]
+                      : `${$selected_brews.formulae.length} ${$locale.title.pkgs[$lang]}`
+              }`
+            : ""}
+    </title>
+</svelte:head>
+
 <div id="brewskie">
     <div id="topbar">
         <Topbar />
     </div>
     <div id="content">
-        <div id="sidebar">
+        <div id="sidebar" class="zone">
             <Sidebar />
         </div>
-        <div id="page">
+        <div id="page" class="zone">
             <slot />
         </div>
     </div>
@@ -35,6 +52,9 @@
         flex-direction: column;
         gap: 0.75rem;
     }
+    .zone {
+        background: var(--brew-sh-alt-bg);
+    }
     #content {
         display: grid;
         grid-template-columns: 1fr 4fr;
@@ -43,16 +63,17 @@
         overflow-y: auto;
     }
     #topbar {
+        opacity: 1;
     }
     #sidebar {
         padding: 0.5rem 0.75rem;
-        border: 3px solid gray;
+        border: 1px solid rgba(0, 0, 0, 0.5);
         border-radius: 0.6rem;
     }
     #page {
         overflow-y: auto;
         overflow-x: hidden;
-        border: 3px solid gray;
+        border: 1px solid rgba(0, 0, 0, 0.5);
         border-radius: 0.6rem;
     }
 </style>

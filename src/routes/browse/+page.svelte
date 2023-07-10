@@ -1,30 +1,57 @@
 <script lang="ts">
     import type { PageData } from "../$types";
+    import { page } from "$app/stores";
     import Brew from "$lib/cmps/Brew.svelte";
     export let data;
+    const sum = data.casks.total_items + data.formulae.total_items;
+    let pagination: number;
+    let count: number;
+    $: pagination = Number($page.url.searchParams.get("page") || 1);
+    $: count = Number($page.url.searchParams.get("count") || 15);
     function toggle_view() {
         const conts = Array.from(document.getElementsByClassName("controlled"));
         const opts = Array.from(document.getElementsByClassName("opt"));
-        conts.forEach((el) => el.classList.toggle("active"));
-        opts.forEach((el) => el.classList.toggle("active"));
+        [...conts, ...opts].forEach((el) => el.classList.toggle("active"));
     }
 </script>
 
-<button
-    class="card title lg:px-2 lg:py-4 lg:mx-4 lg:mt-4"
-    on:click={toggle_view}
+<div
+    class="browse-bar lg:rounded-2xl px-14 shadow-xl lg:px-2 lg:py-4 lg:mx-4 lg:mt-4"
 >
-    <div class="active opt">
-        <div class="card-title">Casks</div>
-        <div class="card-title">Your typical applications.</div>
-    </div>
-    <div class="opt">
-        <div class="card-title">Formulae</div>
-        <div class="card-title">
-            Command-line tools, applications, and runtimes.
+    <button class="active opt" on:click={toggle_view}>
+        <p>Casks</p>
+        <p class="hidden lg:block">Your typical applications.</p>
+    </button>
+    <div class="extras text-xl flex flex-col items-center">
+        <div class="flex gap-2">
+            <a href={`?page=${pagination <= 1 ? 1 : pagination - 1}`}>
+                <ion-icon name="caret-back-outline" />
+            </a>
+            <button>
+                <ion-icon name="search-outline" />
+            </button>
+            <a href={`?page=${pagination + 1}`}>
+                <ion-icon name="caret-forward-outline" />
+            </a>
+        </div>
+        <div
+            title={`${data.stream.casks.length} casks & ${data.stream.formulae.length} formulae`}
+        >
+            {#key pagination}
+                <span>
+                    {(pagination - 1) * count * 2} - {pagination * count * 2}
+                </span>
+                <span style="color: var(--brew-sh-link)">/ {sum}</span>
+            {/key}
         </div>
     </div>
-</button>
+    <button class="opt" on:click={toggle_view}>
+        <p>Formulae</p>
+        <p class="hidden lg:block">
+            Command-line tools, applications, and runtimes.
+        </p>
+    </button>
+</div>
 <div id="controller" class="lg:px-2 lg:py-4">
     <div id="casks" class="w-full lg:w-auto controlled card active">
         <div
@@ -50,7 +77,7 @@
             {/each}
         </div>
     </div>
-    <div id="formulae" class="controlled card">
+    <div id="formulae" class="w-full lg:w-auto controlled card">
         <div
             class="container gap-2 lg:gap-4 lg:p-4 grid lg:flex lg:flex-row lg:flex-wrap"
         >
@@ -80,14 +107,31 @@
     error {
         display: none;
     }
-    .card.title {
-        background: var(--alt-bg);
+    .extras ion-icon {
+        visibility: visible;
     }
-    .card.title > .opt {
-        display: none;
+    .browse-bar {
+        border: solid rgba(0, 0, 0, 0.4) 1px;
+        background: var(--brew-sh-bg);
+        display: flex;
+        gap: 1rem;
+        justify-content: space-around;
+        user-select: none;
     }
-    .card.title > .active.opt {
-        display: block;
+    .opt {
+        opacity: 0.5;
+        transition: opacity 150ms ease-in-out;
+        pointer-events: auto;
+        cursor: pointer;
+    }
+    .opt:hover {
+        color: var(--brew-sh-link-h);
+    }
+
+    .active.opt {
+        opacity: 1;
+        pointer-events: none;
+        cursor: default;
     }
     #controller {
         isolation: isolate;

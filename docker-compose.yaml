@@ -1,7 +1,0 @@
-services:
-  brewskie:
-    build: .
-    container_name: brewskie
-    restart: always
-    ports:
-     - 80:3000

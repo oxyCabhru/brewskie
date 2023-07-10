@@ -4,10 +4,11 @@ import {
     fetch_formula_api,
     get_latest_cask_installs,
     get_latest_formula_installs,
-} from "$lib/brew_sh";
+} from "$lib/brew_sh.server";
 
-async function fetch_resources(url: URL, factor: number = 16) {
+async function fetch_resources(url: URL) {
     let page = Number(url.searchParams.get("page") || 1);
+    const factor = Number(url.searchParams.get("count") || 15);
     if (page == 0) page = 1;
     let casks = await get_latest_cask_installs();
     let formulae = await get_latest_formula_installs();

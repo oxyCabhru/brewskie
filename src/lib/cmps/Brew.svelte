@@ -17,12 +17,20 @@
         brew.type == BrewType.Cask
             ? $selected_brews.casks.includes(brew.token.sanitized)
             : $selected_brews.formulae.includes(brew.token.sanitized);
+    let type: "cask" | "formula" =
+        brew.type == BrewType.Cask ? "cask" : "formula";
+    let token = brew.token.sanitized;
 </script>
 
+<!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
-    class="card card-compact shadow-xl lg:w-fit"
+    class="card card-compact rounded-none shadow-xl lg:w-fit lg:rounded-2xl"
     data-type={brew.type == BrewType.Cask ? "cask" : "formula"}
     data-token={brew.token.sanitized}
+    on:dblclick={() =>
+        selected
+            ? unselect_brew(undefined, token, type)
+            : select_brew(undefined, token, type)}
 >
     <div class="card-body">
         <div class="card-title">
@@ -53,12 +61,15 @@
                 </a>
             </div>
             <div class="ml-auto flex gap-2">
-                <span class="badge badge-outline">
-                    <ion-icon name="arrow-down-outline" />
-                    {brew.installs}
-                </span>
+                {#if !["NaN", 0].includes(brew.installs)}
+                    <span class="badge badge-outline">
+                        <ion-icon name="arrow-down-outline" />
+                        {brew.installs}
+                    </span>
+                {/if}
                 <button
-                    class="badge badge-outline whitespace-nowrap"
+                    class="toggle-brew badge badge-outline whitespace-nowrap"
+                    data-selected={selected}
                     on:click={selected ? unselect_brew : select_brew}
                 >
                     {selected ? "- Unselect" : "+ Select"}
@@ -75,7 +86,8 @@
 
 <style>
     .card {
-        background: var(--alt-bg);
+        border: solid rgba(0, 0, 0, 0.4) 1px;
+        background: var(--brew-sh-bg);
         flex-grow: 1;
     }
     a.hover-link ion-icon {
@@ -96,5 +108,16 @@
     a.hover-link.raw-token:hover::after {
         opacity: 0.5;
         height: 1.75rem;
+    }
+    .toggle-brew {
+        font-weight: bold;
+        color: var(--brew-sh-primary);
+        transition: color 80ms ease-in;
+    }
+    .toggle-brew[data-selected="true"] {
+        color: var(--brew-sh-link);
+    }
+    .toggle-brew:hover {
+        color: var(--brew-sh-link-h);
     }
 </style>

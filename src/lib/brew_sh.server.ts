@@ -1,7 +1,8 @@
 import got from 'got';
-import millify from 'millify';
 import { BrewType, type BrewMetadata, type Installs, type InstallItem } from './types';
-import { cache_refresh, stupid_cache as db } from './db';
+import db, { cache_refresh } from './db';
+const fmt = Intl.NumberFormat('en', { notation: 'compact' });
+const opts = { cache: db, throwHttpErrors: false };
 const URL_cask_installs = "https://formulae.brew.sh/api/analytics/cask-install/30d.json";
 const URL_formula_installs = "https://formulae.brew.sh/api/analytics/install-on-request/30d.json";
 const URL_cask_api = (token: string) => new URL(`${token}.json`, "https://formulae.brew.sh/api/cask/");
@@ -11,13 +12,13 @@ const ANALYTICS_TIMEFRAME = "90d" // "30d" | "90d" | "365d"
 
 export async function get_latest_cask_installs(): Promise<Installs<BrewType.Cask>> {
     cache_refresh();
-    const res = await got(URL_cask_installs, { cache: db }).json();
+    const res = await got(URL_cask_installs, opts).json();
     return res as Installs<BrewType.Cask>;
 };
 
 export async function get_latest_formula_installs(): Promise<Installs<BrewType.Formula>> {
     cache_refresh();
-    const res = await got(URL_formula_installs, { cache: db }).json();
+    const res = await got(URL_formula_installs, opts).json();
     return res as Installs<BrewType.Formula>;
 }
 
@@ -31,12 +32,13 @@ const sanitized_token = (token: string) => {
 }
 
 export async function fetch_cask_api(item: InstallItem<BrewType.Cask>): Promise<BrewMetadata> {
+    cache_refresh();
     const url = URL_cask_api(sanitized_token(item.cask));
-    const res = await got(url, { cache: db }).json() as any;
+    const res = await got(url, opts).json() as any;
     let installs = res.analytics.install[ANALYTICS_TIMEFRAME][res.token];
-    installs = millify(installs < 1000 ? item.count : installs);
+    installs = fmt.format(installs < 1000 ? Number(item.count) : Number(installs));
     const icon_url = URL_get_google_cached_favicon(res.homepage);
-    const binary = (await got(icon_url)).rawBody.toString('base64');
+    const binary = (await got(icon_url, opts)).rawBody.toString('base64');
     const data: BrewMetadata = {
         icon: new URL(res.homepage).host.includes("github") ? undefined : binary,
         type: BrewType.Cask,
@@ -53,12 +55,13 @@ export async function fetch_cask_api(item: InstallItem<BrewType.Cask>): Promise<
 };
 
 export async function fetch_formula_api(item: InstallItem<BrewType.Formula>): Promise<BrewMetadata> {
+    cache_refresh();
     const url = URL_formula_api(item.formula);
-    const res = await got(url, { cache: db }).json() as any;
+    const res = await got(url, opts).json() as any;
     let installs = res.analytics.install[ANALYTICS_TIMEFRAME][res.name];
-    installs = millify(installs < 1000 ? item.count : installs);
+    installs = fmt.format(installs < 1000 ? item.count : installs);
     const icon_url = URL_get_google_cached_favicon(res.homepage);
-    const binary = (await got(icon_url)).rawBody.toString('base64');
+    const binary = (await got(icon_url, opts)).rawBody.toString('base64');
     const data: BrewMetadata = {
         icon: new URL(res.homepage).host.includes("github") ? undefined : binary,
         type: BrewType.Formula,
