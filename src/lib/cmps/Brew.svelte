@@ -22,12 +22,11 @@
     let token = brew.token.sanitized;
 </script>
 
-<!-- svelte-ignore a11y-no-static-element-interactions -->
-<div
+<button
     class="card card-compact rounded-none shadow-xl lg:w-fit lg:rounded-2xl"
     data-type={brew.type == BrewType.Cask ? "cask" : "formula"}
     data-token={brew.token.sanitized}
-    on:dblclick={() =>
+    on:click={() =>
         selected
             ? unselect_brew(undefined, token, type)
             : select_brew(undefined, token, type)}
@@ -44,7 +43,8 @@
                 </span>
                 <a
                     href={brew.homepage}
-                    class={`hover-link truncate flex flex-col ${
+                    target="_blank"
+                    class={`hover-link truncate flex flex-col text-left ${
                         brew.type == BrewType.Cask ? "raw-token" : ""
                     }`}
                     data-token-raw={brew.token.raw}
@@ -53,11 +53,6 @@
                         {brew.display_name}
                         <ion-icon name="link-outline" class="i" />
                     </span>
-                    <!-- {#if brew.type == BrewType.Cask}
-                        <span id="token-vis">
-                            {brew.token.raw}
-                        </span>
-                    {/if} -->
                 </a>
             </div>
             <div class="ml-auto flex gap-2">
@@ -82,7 +77,7 @@
             {brew.description}
         </p>
     </div>
-</div>
+</button>
 
 <style>
     .card {

@@ -2,6 +2,7 @@
     import type { PageData } from "../$types";
     import { page } from "$app/stores";
     import Brew from "$lib/cmps/Brew.svelte";
+    import { onMount } from "svelte";
     export let data;
     const sum = data.casks.total_items + data.formulae.total_items;
     let pagination: number;
@@ -13,11 +14,30 @@
         const opts = Array.from(document.getElementsByClassName("opt"));
         [...conts, ...opts].forEach((el) => el.classList.toggle("active"));
     }
+    function toggle_search() {
+        document
+            .getElementsByClassName("search-bar")[0]
+            .classList.toggle("invisible");
+    }
+    let search_button: EventTarget | null;
+    onMount(() => {
+        document.body.addEventListener("click", (e) => {
+            if (e.target == search_button) return;
+            const search = document.getElementsByClassName("search-bar")[0];
+            search.classList.add("invisible");
+        });
+    });
 </script>
 
 <div
-    class="browse-bar lg:rounded-2xl px-14 shadow-xl lg:px-2 lg:py-4 lg:mx-4 lg:mt-4"
+    class="browse-bar lg:rounded-2xl px-14 shadow-xl lg:px-2 lg:py-4 lg:mx-4 lg:mt-4 relative"
 >
+    <div
+        id="search-bar"
+        class="search-bar rounded-2xl overflow-hidden w-full h-full absolute invisible"
+    >
+        <input type="text" class="rounded w-full" />
+    </div>
     <button class="active opt" on:click={toggle_view}>
         <p>Casks</p>
         <p class="hidden lg:block">Your typical applications.</p>
@@ -27,8 +47,8 @@
             <a href={`?page=${pagination <= 1 ? 1 : pagination - 1}`}>
                 <ion-icon name="caret-back-outline" />
             </a>
-            <button>
-                <ion-icon name="search-outline" />
+            <button on:click={toggle_search}>
+                <ion-icon bind:this={search_button} name="search-outline" />
             </button>
             <a href={`?page=${pagination + 1}`}>
                 <ion-icon name="caret-forward-outline" />
@@ -59,7 +79,7 @@
         >
             {#each data.stream.casks as app}
                 {#await app.api}
-                    <div class="card shadow">
+                    <div class="is-loading card shadow">
                         <div class="card-title">
                             <span class="loading loading-spinner" />
                             {app.token}
@@ -83,7 +103,7 @@
         >
             {#each data.stream.formulae as pkg}
                 {#await pkg.api}
-                    <div class="card shadow">
+                    <div class="is-loading card shadow">
                         <div class="card-title">
                             <span class="loading loading-spinner" />
                             {pkg.token}
@@ -104,6 +124,9 @@
 </div>
 
 <style>
+    .is-loading {
+        opacity: 0.5;
+    }
     error {
         display: none;
     }
@@ -111,12 +134,26 @@
         visibility: visible;
     }
     .browse-bar {
+        isolation: isolate;
         border: solid rgba(0, 0, 0, 0.4) 1px;
         background: var(--brew-sh-bg);
         display: flex;
         gap: 1rem;
         justify-content: space-around;
         user-select: none;
+    }
+    .search-bar {
+        z-index: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: var(--brew-sh-alt-bg);
+        transform: translateY(-16px);
+        padding: 2rem 1rem;
+    }
+    .search-bar input {
+        height: 3rem;
+        padding: 0.25rem 0.5rem;
     }
     .opt {
         opacity: 0.5;
