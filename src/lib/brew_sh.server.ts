@@ -1,6 +1,7 @@
 import got from 'got';
 import { BrewType, type BrewMetadata, type Installs, type InstallItem } from './types';
 import db, { cache_refresh } from './db';
+import KeyvRedis from '@keyv/redis';
 const fmt = Intl.NumberFormat('en', { notation: 'compact' });
 const opts = { cache: db, throwHttpErrors: false };
 const URL_cask_installs = "https://formulae.brew.sh/api/analytics/cask-install/30d.json";

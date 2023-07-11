@@ -17,5 +17,4 @@ export function cache_refresh() {
         db.set("TIMESTAMP", Date.now());
     };
 }
-
 export default db;
