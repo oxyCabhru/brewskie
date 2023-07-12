@@ -41,6 +41,8 @@
   </div>
   <div class="opacity-50 flex flex-col items-center">
     <span>{build_data.revision.slice(0, 7)}</span>
-    <span>{build_data.db_status}</span>
+    <a href="https://github.com/oxyCabhru/brewskie">
+      {build_data.db_status}
+    </a>
   </div>
 </div>
