@@ -9,4 +9,4 @@
         premade brewskies
     </h3>
 </div>
-<a href="/browse"><button>browse!</button></a>
+<a href="/browse">browse!</a>

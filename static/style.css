@@ -36,6 +36,7 @@ a:hover {
   display: inline-block;
   height: 1em;
   width: 1em;
+  visibility: visible !important;
 }
 
 .heb * {

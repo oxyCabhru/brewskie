@@ -12,32 +12,35 @@
       new Blob([Buffer.from(brew.icon, "base64")])
     );
   }
+  const type: "cask" | "formula" =
+    brew.type == BrewType.Cask ? "cask" : "formula";
+  const token = brew.token.sanitized;
   let selected: boolean;
   $: selected =
     brew.type == BrewType.Cask
-      ? $selected_brews.casks.includes(brew.token.sanitized)
-      : $selected_brews.formulae.includes(brew.token.sanitized);
-  let type: "cask" | "formula" =
-    brew.type == BrewType.Cask ? "cask" : "formula";
-  let token = brew.token.sanitized;
+      ? $selected_brews.casks.includes(token)
+      : $selected_brews.formulae.includes(token);
 </script>
 
 <button
   class="card card-compact rounded-none shadow-xl lg:w-fit lg:rounded-2xl"
   data-selected={selected}
-  data-type={brew.type == BrewType.Cask ? "cask" : "formula"}
-  data-token={brew.token.sanitized}
-  on:click={() =>
-    selected
-      ? unselect_brew(undefined, token, type)
-      : select_brew(undefined, token, type)}
+  data-type={token}
+  data-token={token}
+  on:click={(e) =>
+    selected ? unselect_brew(e, token, type) : select_brew(e, token, type)}
 >
   <div class="card-body">
     <div class="card-title">
       <div class="flex flex-row items-center gap-2 relative">
         <span class="brew-icon">
           {#if brew.icon}
-            <img alt="" src={icon_url} width="16" height="16" />
+            <img
+              alt={`${brew.homepage} favicon`}
+              src={icon_url}
+              width="16"
+              height="16"
+            />
           {:else}
             <ion-icon name="logo-github" />
           {/if}
@@ -50,7 +53,7 @@
           }`}
           data-token-raw={brew.token.raw}
         >
-          <span>
+          <span id="dni">
             {brew.display_name}
             <ion-icon name="link-outline" class="i" />
           </span>
@@ -66,7 +69,6 @@
         <button
           class="toggle-brew badge badge-outline whitespace-nowrap"
           data-selected={selected}
-          on:click={selected ? unselect_brew : select_brew}
         >
           {selected ? "- Unselect" : "+ Select"}
         </button>

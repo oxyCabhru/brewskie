@@ -65,46 +65,6 @@
   error {
     display: none;
   }
-  .extras ion-icon {
-    visibility: visible;
-  }
-  /* .browse-bar {
-        isolation: isolate;
-        border: solid rgba(0, 0, 0, 0.4) 1px;
-        background: var(--brew-sh-bg);
-        display: flex;
-        gap: 1rem;
-        justify-content: space-around;
-        user-select: none;
-    }
-    .search-bar {
-        z-index: 1;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background: var(--brew-sh-alt-bg);
-        transform: translateY(-16px);
-        padding: 2rem 1rem;
-    }
-    .search-bar input {
-        height: 3rem;
-        padding: 0.25rem 0.5rem;
-    }
-    .opt {
-        opacity: 0.5;
-        transition: opacity 150ms ease-in-out;
-        pointer-events: auto;
-        cursor: pointer;
-    }
-    .opt:hover {
-        color: var(--brew-sh-link-h);
-    }
-
-    .active.opt {
-        opacity: 1;
-        pointer-events: none;
-        cursor: default;
-    } */
   #controller {
     isolation: isolate;
     position: relative;

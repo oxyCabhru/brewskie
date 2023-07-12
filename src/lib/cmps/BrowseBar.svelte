@@ -1,42 +1,91 @@
 <script lang="ts">
   import { page } from "$app/stores";
   import { onMount } from "svelte";
+  import debounce from "lodash.debounce";
+  import { BrewType } from "$lib/types";
   export let data: any;
   const sum = data.casks.total_items + data.formulae.total_items;
   let pagination: number;
   let count: number;
   $: pagination = Number($page.url.searchParams.get("page") || 1);
   $: count = Number($page.url.searchParams.get("count") || 15);
+
   function toggle_view() {
     const conts = Array.from(document.getElementsByClassName("controlled"));
     const opts = Array.from(document.getElementsByClassName("opt"));
     [...conts, ...opts].forEach((el) => el.classList.toggle("active"));
   }
-  let search_btn: EventTarget | null;
-  let search_bar: EventTarget | null;
+
+  let search_bar: HTMLDivElement;
   function search_on() {
-    document
-      .getElementsByClassName("search-bar")[0]
-      .classList.remove("invisible");
-    if (document.body.getAttribute("search")) return;
+    search_bar.classList.add("active");
+    search_input.focus();
+    if (search_bar.getAttribute("active")) return;
+
     document.body.addEventListener("keydown", (e) => {
-      const bar = document.getElementsByClassName("search-bar")[0];
-      if (e.code != "Escape" || e.key != "Escape") return;
-      bar.classList.add("invisible");
+      const bar = document.getElementById("search-bar");
+      if (bar && (e.code == "Escape" || e.key == "Escape")) {
+        bar.classList.remove("active");
+        search_value = "";
+        search_results.innerHTML = "";
+      }
     });
-    document.body.setAttribute("search", "true");
+    search_bar.setAttribute("active", "true");
+  }
+  onMount(() => {
+    document.body.addEventListener("keydown", (e) => {
+      if ((e.code == "KeyK" || e.key == "K") && e.ctrlKey) {
+        e.preventDefault();
+        search_on();
+      }
+    });
+  });
+
+  let search_input: HTMLInputElement;
+  let search_results: HTMLUListElement;
+  let search_value: string;
+  async function search() {
+    if (search_value.trim() == "") {
+      search_results.innerHTML = "";
+      return;
+    }
+    const found: { type: string; brew: string }[] = await (
+      await fetch("../query", {
+        method: "POST",
+        body: JSON.stringify({
+          query: search_value,
+        }),
+      })
+    ).json();
+    found.forEach((brew) => {
+      let node = document.createElement("li");
+      node.classList.add("card");
+      node.classList.add("shadow-xl");
+      node.innerText = brew.brew;
+      search_results.appendChild(node);
+    });
   }
 </script>
 
 <div
-  class="browse-bar lg:rounded-2xl px-14 shadow-xl lg:px-2 lg:py-4 lg:mx-4 lg:mt-4 relative"
+  class="browse-bar lg:rounded-2xl py-2 shadow-xl lg:px-14 lg:py-4 lg:mx-4 lg:mt-4 relative"
 >
   <div
     id="search-bar"
-    class="search-bar rounded-2xl overflow-hidden w-full h-full absolute invisible"
+    class="search-bar rounded-2xl overflowx-hidden w-full h-full absolute"
     bind:this={search_bar}
   >
-    <input type="text" class="rounded w-full" />
+    <input
+      type="text"
+      class="rounded w-full"
+      placeholder="Press [esc] to flip back"
+      on:input={debounce(search, 200)}
+      bind:this={search_input}
+      bind:value={search_value}
+    />
+  </div>
+  <div class="search-results">
+    <ul bind:this={search_results} />
   </div>
   <button class="active opt" on:click={toggle_view}>
     <p>Casks</p>
@@ -50,7 +99,7 @@
         <ion-icon name="caret-back-outline" />
       </a>
       <button on:click={search_on}>
-        <ion-icon bind:this={search_btn} name="search-outline" />
+        <ion-icon name="search-outline" />
       </button>
       <a href={`?page=${pagination + 1}`}>
         <ion-icon name="caret-forward-outline" />
@@ -79,8 +128,11 @@
   .extras ion-icon {
     visibility: visible;
   }
+  .extras ion-icon:hover {
+    color: var(--brew-sh-link-h);
+  }
   .browse-bar {
-    isolation: isolate;
+    /* isolation: isolate; */
     border: solid rgba(0, 0, 0, 0.4) 1px;
     background: var(--brew-sh-bg);
     display: grid;
@@ -95,11 +147,38 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: var(--brew-sh-alt-bg);
     padding: 2rem 1rem;
+    transform: rotate3d(1, 0, 0, 90deg);
+    transition: transform 180ms ease-in-out;
+  }
+  .search-results {
+    outline: 1px solid red;
+    z-index: 2;
+    position: absolute;
+    top: 100%;
+    width: 100%;
+    display: grid;
+    place-items: center;
+    text-align: center;
+    pointer-events: none;
+  }
+  .search-results ul {
+    /* outline: 3px solid cyan; */
+    pointer-events: auto;
+  }
+  :global(.search-results ul li) {
+    /* outline: 1px solid yellow; */
+    border: solid rgba(0, 0, 0, 0.4) 1px;
+    background: var(--brew-sh-bg);
+  }
+  :global(.search-results ul li + li) {
+    margin-top: 0.25rem;
+  }
+  :global(.search-bar.active) {
+    transform: rotate3d(0, 0, 0, 0) !important;
   }
   .search-bar input {
-    height: 3rem;
+    height: 3.25rem;
     padding: 0.25rem 0.5rem;
   }
   .opt {
@@ -110,6 +189,7 @@
   }
   .opt:hover {
     color: var(--brew-sh-link-h);
+    border: 1px solid var(--brew-sh-link-h);
   }
 
   .active.opt {
