@@ -152,7 +152,7 @@
     transition: transform 180ms ease-in-out;
   }
   .search-results {
-    outline: 1px solid red;
+    /* outline: 1px solid red; */
     z-index: 2;
     position: absolute;
     top: 100%;
