@@ -1,6 +1,9 @@
 name: Deploy to GCP
 run-name: ${{ github.actor }} created a new commit and it is now being deployed.
-on: [push]
+on: 
+  push:
+    branches:
+      - production
 env:
   IMAGE: "oxycabhru/brewskie:latest"
 jobs:
