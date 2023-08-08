@@ -3,7 +3,6 @@ import {
   to = google_container_cluster.brewskie_cluster
   id = "projects/fiery-celerity-390306/locations/us-central1/clusters/brewskie-cluster"
 }
-
 resource "google_container_cluster" "brewskie_cluster" {
   name             = "brewskie-cluster"
   location         = var.region
@@ -21,16 +20,16 @@ resource "google_dns_managed_zone" "production" {
 }
 
 
+# static ip for self-preservation
 import {
-  to = google_compute_address.static_ip
-  id = "projects/fiery-celerity-390306/regions/us-central1/addresses/static-ip"
+  to = google_compute_global_address.static_ip
+  id = "projects/fiery-celerity-390306/global/addresses/static-ip"
 }
-resource "google_compute_address" "static_ip" {
-  name   = "static-ip"
-  region = var.region
+resource "google_compute_global_address" "static_ip" {
+  name = "static-ip"
 }
 
-# two records pointing getbrewskie.com and www.getbrewskie.com to whatever the endpoint of the cluster is
+# two records pointing getbrewskie.com and www.getbrewskie.com to the static ip
 import {
   to = google_dns_record_set.getbrewskie
   id = "projects/fiery-celerity-390306/managedZones/brewskie-prod/rrsets/getbrewskie.com./A"
@@ -40,9 +39,8 @@ resource "google_dns_record_set" "getbrewskie" {
   type         = "A"
   ttl          = 300
   managed_zone = google_dns_managed_zone.production.name
-  rrdatas      = [google_compute_address.static_ip.address]
+  rrdatas      = [google_compute_global_address.static_ip.address]
 }
-
 import {
   to = google_dns_record_set.www_getbrewskie
   id = "projects/fiery-celerity-390306/managedZones/brewskie-prod/rrsets/www.getbrewskie.com./A"
@@ -52,12 +50,11 @@ resource "google_dns_record_set" "www_getbrewskie" {
   type         = "A"
   ttl          = 300
   managed_zone = google_dns_managed_zone.production.name
-  rrdatas      = [google_compute_address.static_ip.address]
+  rrdatas      = [google_compute_global_address.static_ip.address]
 }
 
 # this provisions a cluster
 # and makes sure there's a dns A record that points www./getbrewskie.com 
-
 output "static_ip" {
-  value = google_compute_address.static_ip.address
+  value = google_compute_global_address.static_ip.address
 }

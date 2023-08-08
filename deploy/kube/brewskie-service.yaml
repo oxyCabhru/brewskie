@@ -4,10 +4,10 @@ metadata:
   name: brewskie-np
 spec:
   type: NodePort
+  selector:
+    app: brewskie
   ports:
     - name: http
       port: 80
       targetPort: 3000
       protocol: "TCP"
-  selector:
-    app: brewskie
