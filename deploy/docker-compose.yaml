@@ -2,7 +2,7 @@ services:
   brewskie:
     depends_on:
       - redis
-    image: oxycabhru/brewskie
+    image: oxycabhru/brewskie:latest
     container_name: brewskie
     restart: always
     ports:
