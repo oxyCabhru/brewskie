@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: brewskie-np
+  name: brewskie-lb
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: brewskie
   ports:

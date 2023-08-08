@@ -1,8 +1,0 @@
-apiVersion: networking.gke.io/v1
-kind: ManagedCertificate
-metadata:
-  name: brewskie-ssl
-spec:
-  domains:
-    - getbrewskie.com
-    - www.getbrewskie.com
