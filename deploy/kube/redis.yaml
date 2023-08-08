@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      db: redis
+  template:
+    metadata:
+      name: redis-cluster
+      labels:
+        db: redis
+    spec:
+      containers:
+        - name: brewskie-db-redis
+          image: redis
+          ports:
+            - containerPort: 6379
+          volumeMounts:
+            - name: redis-storage
+              mountPath: /data
+      volumes:
+        - name: redis-storage
+          emptyDir: {}
+        # use a more persistent storage,
+        # though this is used for caching so it's really fine

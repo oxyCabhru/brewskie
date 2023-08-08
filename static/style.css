@@ -1,0 +1,47 @@
+@import url("https://fonts.googleapis.com/css?family=Geologica&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Alef&display=swap");
+
+:root {
+  --brew-sh-primary: rgb(249, 208, 148);
+  --brew-sh-secondary: rgb(116, 86, 38);
+  --brew-sh-bg: rgb(46, 42, 36);
+  --brew-sh-alt-bg: rgba(75, 75, 75, 0.2);
+  --brew-sh-link: rgb(190, 134, 45);
+  --brew-sh-link-h: rgb(211, 164, 89);
+  --brew-sh-btn-bg: rgba(162, 107, 20, 0.302);
+  --brew-sh-btn-bg-h: rgba(162, 107, 20, 0.251);
+}
+ion-icon {
+  visibility: visible !important;
+}
+body {
+  margin: 0;
+  font-family: Geologica;
+  height: 100dvh;
+  width: 100dvw;
+  display: flex;
+  background: var(--brew-sh-bg);
+  color: var(--brew-sh-primary);
+}
+
+a {
+  font-weight: bold;
+  color: var(--brew-sh-link);
+  transition: color 80ms ease-in;
+}
+a:hover {
+  color: var(--brew-sh-link-h);
+}
+
+.i {
+  vertical-align: middle;
+  display: inline-block;
+  height: 1em;
+  width: 1em;
+  visibility: visible !important;
+}
+
+.heb * {
+  direction: rtl;
+  font-family: Alef;
+}

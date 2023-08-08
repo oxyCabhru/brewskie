@@ -1,0 +1,17 @@
+services:
+  brewskie:
+    depends_on:
+      - redis
+    image: oxycabhru/brewskie
+    container_name: brewskie
+    restart: always
+    ports:
+      - 3000:3000
+  redis:
+    container_name: redis-cluster
+    platform: linux/amd64
+    image: redis
+    ports:
+      - 6379:6379
+    volumes:
+      - /var/redis/brewskie:/data:rw
