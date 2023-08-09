@@ -1,4 +1,4 @@
-# # k8s cluster
+# k8s cluster
 import {
   to = google_container_cluster.brewskie_cluster
   id = "projects/fiery-celerity-390306/locations/us-central1/clusters/brewskie-cluster"
@@ -22,10 +22,10 @@ resource "google_dns_managed_zone" "production" {
 
 # static ip for self-preservation
 import {
-  to = google_compute_global_address.static_ip
+  to = google_compute_address.static_ip
   id = "projects/fiery-celerity-390306/global/addresses/static-ip"
 }
-resource "google_compute_global_address" "static_ip" {
+resource "google_compute_address" "static_ip" {
   name = "static-ip"
 }
 
@@ -39,7 +39,7 @@ resource "google_dns_record_set" "getbrewskie" {
   type         = "A"
   ttl          = 300
   managed_zone = google_dns_managed_zone.production.name
-  rrdatas      = [google_compute_global_address.static_ip.address]
+  rrdatas      = [google_compute_address.static_ip.address]
 }
 import {
   to = google_dns_record_set.www_getbrewskie
@@ -50,11 +50,11 @@ resource "google_dns_record_set" "www_getbrewskie" {
   type         = "A"
   ttl          = 300
   managed_zone = google_dns_managed_zone.production.name
-  rrdatas      = [google_compute_global_address.static_ip.address]
+  rrdatas      = [google_compute_address.static_ip.address]
 }
 
 # this provisions a cluster
 # and makes sure there's a dns A record that points www./getbrewskie.com 
 output "static_ip" {
-  value = google_compute_global_address.static_ip.address
+  value = google_compute_address.static_ip.address
 }
