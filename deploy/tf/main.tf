@@ -23,7 +23,7 @@ resource "google_dns_managed_zone" "production" {
 # static ip for self-preservation
 import {
   to = google_compute_address.static_ip
-  id = "projects/fiery-celerity-390306/global/addresses/static-ip"
+  id = "projects/fiery-celerity-390306/regions/us-central1//addresses/static-ip"
 }
 resource "google_compute_address" "static_ip" {
   name = "static-ip"
