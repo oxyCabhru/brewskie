@@ -23,7 +23,7 @@ resource "google_dns_managed_zone" "production" {
 # static ip for self-preservation
 import {
   to = google_compute_address.static_ip
-  id = "projects/fiery-celerity-390306/regions/us-central1//addresses/static-ip"
+  id = "projects/fiery-celerity-390306/regions/us-central1/addresses/static-ip"
 }
 resource "google_compute_address" "static_ip" {
   name = "static-ip"
@@ -43,14 +43,14 @@ resource "google_dns_record_set" "getbrewskie" {
 }
 import {
   to = google_dns_record_set.www_getbrewskie
-  id = "projects/fiery-celerity-390306/managedZones/brewskie-prod/rrsets/www.getbrewskie.com./A"
+  id = "projects/fiery-celerity-390306/managedZones/brewskie-prod/rrsets/www.getbrewskie.com./CNAME"
 }
 resource "google_dns_record_set" "www_getbrewskie" {
   name         = "www.${google_dns_managed_zone.production.dns_name}"
-  type         = "A"
+  type         = "CNAME"
   ttl          = 300
   managed_zone = google_dns_managed_zone.production.name
-  rrdatas      = [google_compute_address.static_ip.address]
+  rrdatas      = [var.domain]
 }
 
 # this provisions a cluster
