@@ -47,6 +47,7 @@
         bind:value={quickstart}
       />
       <button
+        aria-label="restore selections from the quickstart code"
         class="btn btn-sm btn-square text-xl"
         on:click={debounce(load_up, 300)}
       >

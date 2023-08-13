@@ -74,6 +74,7 @@
     class="alert alert-success shadow-xl relative"
   >
     <button
+      aria-label="dismiss success flyer"
       class="absolute right-0.5 bottom-0 text-xl"
       style="visibility: visible !important"
       on:click={() => {
@@ -118,6 +119,7 @@
       <div id="brews" class="text-xs flex flex-row flex-wrap gap-1 px-2 w-80">
         {#each brews as brew}
           <button
+            aria-label={`unselect brew ${brew.brew} of type ${brew.type}`}
             class="brew badge badge-outline whitespace-nowrap"
             on:click={(e) => unselect_brew(e, brew.brew, brew.type)}
           >
@@ -129,13 +131,18 @@
     </div>
     <div class="flex flex-col gap-2">
       <button
+        aria-label="download the script, dubbed brewskie"
         class="btn btn-sm btn-primary upper font-bold"
         on:click={brewskie}
       >
         Get Brewskie
         <ion-icon name="beer-outline" class="i" />
       </button>
-      <button class="btn btn-sm upper font-bold" on:click={clear_brews}>
+      <button
+        aria-label="clear all selections"
+        class="btn btn-sm upper font-bold"
+        on:click={clear_brews}
+      >
         Clear Selection
       </button>
     </div>

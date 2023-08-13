@@ -19,6 +19,7 @@
 </script>
 
 <button
+  aria-label={`select brew: ${brew.token}, of type ${brew.type}`}
   class="card card-compact shadow-xl w-min lg:w-fit rounded-2xl"
   data-selected={selected}
   data-type={type}
@@ -62,6 +63,7 @@
           </span>
         {/if}
         <button
+          aria-label={`select brew: ${brew.token}, of type ${brew.type}`}
           class="toggle-brew badge badge-outline whitespace-nowrap"
           data-selected={selected}
         >

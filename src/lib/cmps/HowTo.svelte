@@ -37,8 +37,9 @@
       >Download the script and review it!</span
     >
     <p class="collapse-content text-white/60">
-      Click the <button class="btn btn-primary btn-sm uppercase"
-        >Get Brewskie</button
+      Click the <button
+        class="btn btn-primary btn-sm uppercase"
+        aria-label="nonfunctional, demo button">Get Brewskie</button
       >
       button in the selected brews pop-up to download the script. I strongly encourage
       you to read its contents before running it, make sure you understand what you
