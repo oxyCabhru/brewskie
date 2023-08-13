@@ -1,6 +1,6 @@
 name: Deploy to GCP
 run-name: ${{ github.actor }} created a new commit and it is now being deployed.
-on: 
+on:
   push:
     branches:
       - production
@@ -74,6 +74,3 @@ jobs:
       - name: Attach static IP to the service endpoint
         run: >
           kubectl patch service brewskie-lb -p '{"spec": {"loadBalancerIP": "${{ steps.static_ip.outputs.STATIC_IP }}"}}';
-      # - name: Display IP
-      #   id: display_ip
-      #   run: echo $(kubectl describe service brewskie-lb | grep Ingress | tr -d '/[a-zA-Z:]/g' | xargs);
