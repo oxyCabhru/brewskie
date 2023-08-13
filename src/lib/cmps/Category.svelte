@@ -52,6 +52,7 @@
       {category.category}
       {#if category.toggle_all}
         <button
+          aria-label={`select all brews in category: ${category.category}`}
           id="select-all"
           class="badge badge-outline"
           data-selected={selected ? "Unselect all" : "Select all"}

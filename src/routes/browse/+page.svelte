@@ -9,9 +9,7 @@
 
 <div id="controller" class="lg:px-2 lg:py-4">
   <div id="casks" class="w-full lg:w-auto controlled card active">
-    <div
-      class="container gap-2 lg:gap-4 lg:p-4 grid lg:flex lg:flex-row lg:flex-wrap"
-    >
+    <div class="container gap-2 lg:gap-4 p-2 lg:p-4 flex flex-row flex-wrap">
       {#each data.stream.casks as app}
         {#await app.api}
           <div class="is-loading card shadow">
@@ -33,9 +31,7 @@
     </div>
   </div>
   <div id="formulae" class="w-full lg:w-auto controlled card">
-    <div
-      class="container gap-2 lg:gap-4 lg:p-4 grid lg:flex lg:flex-row lg:flex-wrap"
-    >
+    <div class="container gap-2 lg:gap-4 p-2 lg:p-4 flex flex-row flex-wrap">
       {#each data.stream.formulae as pkg}
         {#await pkg.api}
           <div class="is-loading card shadow">

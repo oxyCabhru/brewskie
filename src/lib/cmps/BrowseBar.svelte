@@ -14,7 +14,7 @@
   }
 
   let search_status: boolean = false;
-  const search_on = () => (search_status = !search_status);
+  const search_toggle = () => (search_status = !search_status);
 </script>
 
 <div
@@ -32,7 +32,7 @@
       <a href={`?page=${pagination <= 1 ? 1 : pagination - 1}`}>
         <ion-icon name="caret-back-outline" />
       </a>
-      <button on:click={search_on}>
+      <button on:click={search_toggle}>
         <ion-icon name="search-outline" />
       </button>
       <a href={`?page=${pagination + 1}`}>

@@ -1,12 +1,16 @@
 <script lang="ts">
   import { page } from "$app/stores";
-  let breadcrumbs: string[];
-  $: breadcrumbs = $page.route.id?.split("/").filter((v) => v != "") || [];
+  export let breadcrumbs: string[];
 </script>
 
 <div class="flex flex-row justify-between w-full">
   <div>
-    <h1 class="text-3xl">Brewskie 🤙</h1>
+    <h1 class="lg:text-3xl text-l">
+      Brewskie 🤙
+      <p class="text-white/50 hidden lg:block">
+        Install apps and packages quickly and easily, powered by Homebrew.
+      </p>
+    </h1>
     {#if breadcrumbs.length > 0}
       <div class="flex flex-col">
         <div class="breadcrumbs opacity-70">
