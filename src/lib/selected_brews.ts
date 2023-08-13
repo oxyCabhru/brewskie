@@ -20,6 +20,7 @@ export function arr_includes(arr: string[], other: string[]): boolean {
  * @param brew_token_s a single brew token or an array of them.
  * @param brew_type optional for performance, unless querying an array
  * @param _ optional, just for activating reactive statements
+ * @returns boolean
  */
 export function is_selected(brew_token_s: string | string[], brew_type?: "cask" | "formula", _?: SelectedBrews): boolean {
     let sb: SelectedBrews = get(selected_brews);

@@ -1,21 +1,29 @@
 <script lang="ts">
   import "../app.css";
-  import { selected_brews } from "$lib/selected_brews";
+  import { clear_brews, selected_brews } from "$lib/selected_brews";
   import { Buffer } from "buffer";
   import Topbar from "$lib/cmps/Topbar.svelte";
   import Sidebar from "$lib/cmps/Sidebar.svelte";
   import SelectedPopup from "$lib/cmps/SelectedPopup.svelte";
+  import { page, navigating } from "$app/stores";
+  import HowTo from "$lib/cmps/HowTo.svelte";
+  let breadcrumbs: string[];
+  $: breadcrumbs = $page.route.id?.split("/").filter((v) => v != "") || [];
   globalThis.Buffer = Buffer;
   let brews: any[];
-  $: brews = $selected_brews.casks
-    .map((brew) => {
-      return { brew: brew, type: "cask" };
-    })
-    .concat(
-      $selected_brews.formulae.map((brew) => {
-        return { brew: brew, type: "formula" };
+  const parse_brews = (refresh?: boolean) => {
+    if (refresh) clear_brews();
+    return $selected_brews.casks
+      .map((brew) => {
+        return { brew: brew, type: "cask" };
       })
-    );
+      .concat(
+        $selected_brews.formulae.map((brew) => {
+          return { brew: brew, type: "formula" };
+        })
+      );
+  };
+  $: brews = $selected_brews ? parse_brews(false) : parse_brews(true);
 </script>
 
 <svelte:head>
@@ -36,18 +44,23 @@
 </svelte:head>
 
 <div id="container">
-  <div id="overlay">
+  <div id="overlay" class="content-end lg:content-start">
+    {#if $navigating}
+      <div class="mt-4 scale-150 loading loading-spinner" />
+    {/if}
     <SelectedPopup {brews} />
   </div>
   <div id="brewskie">
     <div id="topbar">
-      <Topbar />
+      <Topbar {breadcrumbs} />
     </div>
     <div id="content">
-      <div id="sidebar" class="zone">
-        <Sidebar />
+      <div id="sidebar" class="hidden lg:block zone">
+        <Sidebar>
+          <HowTo />
+        </Sidebar>
       </div>
-      <div id="page" class="zone">
+      <div id="page" class="zone grow">
         <slot />
       </div>
     </div>
@@ -66,7 +79,6 @@
     gap: 1.5rem;
     padding: 0.5rem 2rem;
     display: grid;
-    align-content: start;
     justify-content: center;
     pointer-events: none;
   }
@@ -84,8 +96,7 @@
     background: var(--brew-sh-alt-bg);
   }
   #content {
-    display: grid;
-    grid-template-columns: 1fr 4fr;
+    display: flex;
     gap: 0.5rem;
     flex-grow: 1;
     overflow-y: auto;
@@ -96,8 +107,10 @@
   #sidebar {
     padding: 0.5rem 0.75rem;
     border: 1px solid rgba(0, 0, 0, 0.5);
+    width: min-content;
     border-radius: 0.6rem;
     overflow-y: auto;
+    overflow-x: hidden;
   }
   #page {
     overflow-y: auto;

@@ -5,7 +5,7 @@
 </script>
 
 <div class="flex flex-row gap-2">
-  <div class="grid gap-2 m-4 w-fit">
+  <div class="grid gap-2 m-4">
     {#each data.categories_stream as category}
       <Category {category} />
     {/each}
