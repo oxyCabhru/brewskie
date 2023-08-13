@@ -113,7 +113,7 @@
     overflow-x: hidden;
   }
   #page {
-    overflow-y: auto;
+    width: fit-content;
     overflow-x: hidden;
     border: 1px solid rgba(0, 0, 0, 0.5);
     border-radius: 0.6rem;

@@ -19,7 +19,7 @@
 </script>
 
 <button
-  class="card card-compact rounded-none shadow-xl lg:w-fit lg:rounded-2xl"
+  class="card card-compact shadow-xl w-min lg:w-fit rounded-2xl"
   data-selected={selected}
   data-type={type}
   data-token={token}
