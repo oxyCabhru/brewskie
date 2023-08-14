@@ -50,20 +50,19 @@
     downloaded_hash = h;
     success = true;
   }
-  onMount(() => {
-    const brews = document.getElementById("brews");
-    const alert = document.getElementById("selected-popup");
-    if (!brews || !alert) return;
-    const update = () => {
-      const content_height = brews.scrollHeight;
-      brews.style.setProperty(
-        "--size",
-        `${Math.min(content_height, 96).toString()}px`
-      );
-    };
+  let popup_brews: HTMLDivElement;
+  let alert: HTMLDivElement;
+  const update = () => {
+    const content_height = popup_brews.scrollHeight;
+    popup_brews.style.setProperty(
+      "--size",
+      `${Math.min(content_height, 96).toString()}px`
+    );
+  };
+  $: if (alert && popup_brews) {
     alert.addEventListener("mouseenter", update);
     alert.addEventListener("mouseleave", update);
-  });
+  }
 </script>
 
 {#if success}
@@ -112,11 +111,20 @@
   </div>
 {/if}
 {#if brews.length > 0}
-  <div transition:slide id="selected-popup" class="alert shadow-xl">
+  <div
+    transition:slide
+    id="selected-popup"
+    bind:this={alert}
+    class="alert shadow-xl"
+  >
     <ion-icon name="beer-outline" class="i" />
     <div>
       <h3 class="font-bold">Selected Brews:</h3>
-      <div id="brews" class="text-xs flex flex-row flex-wrap gap-1 px-2 w-80">
+      <div
+        id="brews"
+        bind:this={popup_brews}
+        class="text-xs flex flex-row flex-wrap gap-1 px-2 w-80"
+      >
         {#each brews as brew}
           <button
             aria-label={`unselect brew ${brew.brew} of type ${brew.type}`}
@@ -150,11 +158,9 @@
 {/if}
 
 <style>
-  .alert #brews {
-    --size: 1.5rem;
-  }
   #brews {
     height: 1.5rem;
+    --size: 1.5rem;
     overflow-y: hidden;
     transition: height 180ms ease-out;
   }
