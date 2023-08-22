@@ -5,7 +5,8 @@ FROM --platform=linux/amd64 node:18
 WORKDIR /usr/src/brewskie
 COPY . .
 RUN npm install
-RUN npm run build
+RUN echo "export COMMIT_HASH=$(git rev-parse HEAD)" >> /envfile
+RUN . /envfile; npm run build
 
 #runtime
 EXPOSE 3000
