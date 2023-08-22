@@ -53,6 +53,14 @@ resource "google_dns_record_set" "www_getbrewskie" {
   rrdatas      = [var.domain]
 }
 
+resource "google_dns_record_set" "analytics_getbrewskie" {
+  name         = "analytics.${google_dns_managed_zone.production.dns_name}"
+  type         = "CNAME"
+  ttl          = 300
+  managed_zone = google_dns_managed_zone.production.name
+  rrdatas      = [var.domain]
+}
+
 # this provisions a cluster
 # and makes sure there's a dns A record that points www./getbrewskie.com 
 output "static_ip" {
