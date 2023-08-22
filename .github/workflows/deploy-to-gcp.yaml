@@ -6,7 +6,6 @@ on:
       - production
 env:
   IMAGE: "oxycabhru/brewskie:latest"
-  COMMIT_HASH: ${{ github.event.workflow_run.head_commit.id }}
 jobs:
   TERRAFORM:
     name: Setup the cloud environment
