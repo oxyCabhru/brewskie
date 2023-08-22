@@ -11,9 +11,11 @@ spec:
         paths:
           - pathType: Prefix
             path: "/"
-            service:
-              name: brewskie-lb
-              port: 80
+            backend:
+              service:
+                name: brewskie-lb
+                port:
+                  number: 80
     - host: analytics.getbrewskie.com
       http:
         paths:
