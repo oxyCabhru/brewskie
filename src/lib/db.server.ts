@@ -1,13 +1,15 @@
 import { building, dev } from "$app/environment";
 
-import KeyvRedis from "@keyv/redis";
+import KeyvMysql from "@keyv/mysql";
 import Keyv from "keyv";
-let db: KeyvRedis<any> | Keyv;
+let db: KeyvMysql<any> | Keyv;
 
 if (!building && !dev) {
-    db = new KeyvRedis("redis://redis-cluster:6379");
+    db = new KeyvMysql("mysql://brewskie:brewskie@mysql-cluster:3306/brewskie");
 } else {
     db = new Keyv();
 }
+
+
 
 export default db;

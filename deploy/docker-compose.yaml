@@ -1,17 +1,35 @@
+version: "3.8"
+
 services:
   brewskie:
     depends_on:
-      - redis
+      mysql:
+        condition: service_healthy
     image: oxycabhru/brewskie:latest
     container_name: brewskie
     restart: always
     ports:
       - 3000:3000
-  redis:
-    container_name: redis-cluster
+
+
+  mysql:
+    image: mysql
+    container_name: mysql-cluster
+    command: --default-authentication-plugin=caching_sha2_password
+    restart: always
     platform: linux/amd64
-    image: redis
     ports:
-      - 6379:6379
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: brewskie
+      MYSQL_USER: brewskie
+      MYSQL_PASSWORD: brewskie
+      MYSQL_DATABASE: brewskie
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER --password=$$MYSQL_PASSWORD
+      start_period: 5s
+      interval: 5s
+      timeout: 5s
+      retries: 55
     volumes:
-      - /var/redis/brewskie:/data:rw
+      - /var/lib/mysql:/data:rw

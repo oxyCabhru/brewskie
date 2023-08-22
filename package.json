@@ -27,7 +27,7 @@
   },
   "type": "module",
   "dependencies": {
-    "@keyv/redis": "^2.7.0",
+    "@keyv/mysql": "^1.6.10",
     "buffer": "^6.0.3",
     "copy-to-clipboard": "^3.3.3",
     "crypto-js": "^4.1.1",
