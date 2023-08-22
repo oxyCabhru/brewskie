@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      db: mysql
+  template:
+    metadata:
+      name: mysql-cluster
+      labels:
+        db: mysql
+    spec:
+      containers:
+        - name: brewskie-db-mysql
+          image: mysql
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: brewskie
+            - name: MYSQL_USER
+              value: brewskie
+            - name: MYSQL_PASSWORD
+              value: brewskie
+            - name: MYSQL_DATABASE
+              value: brewskie
+          ports:
+            - containerPort: 3306
+          volumeMounts:
+            - name: mysql-storage
+              mountPath: /data
+      volumes:
+        - name: mysql-storage
+          emptyDir: {}
+        # use a more persistent storage,
+        # though this is used for caching so it's really fine
