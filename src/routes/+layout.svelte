@@ -41,6 +41,12 @@
         }`
       : ""}
   </title>
+
+  <script
+    async
+    src="https://analytics.umami.is/script.js"
+    data-website-id="c2564a40-959f-47e3-bb81-296a428a126f"
+  ></script>
 </svelte:head>
 
 <div id="container">
