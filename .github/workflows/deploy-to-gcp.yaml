@@ -71,6 +71,6 @@ jobs:
         run: kubectl apply -f ./deploy/kube
       - name: Refresh image
         run: kubectl rollout restart deployment/brewskie-deployment
-      - name: Attach static IP to the service endpoint
-        run: >
-          kubectl patch ingress ingress -p '{"spec": {"loadBalancerIP": "${{ steps.static_ip.outputs.STATIC_IP }}"}}';
+      # - name: Attach static IP to the service endpoint
+      #   run: >
+      #     kubectl patch ingress ingress -p '{"spec": {"loadBalancerIP": "${{ steps.static_ip.outputs.STATIC_IP }}"}}';
