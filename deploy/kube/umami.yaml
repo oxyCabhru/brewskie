@@ -14,5 +14,8 @@ spec:
       containers:
         - name: umami
           image: docker.umami.dev/umami-software/umami:mysql-latest
+          env:
+            - name: DATABASE_URL
+              value: mysql://brewskie:brewskie@mysql-cluster:3306/brewskie
           ports:
             - containerPort: 3000
