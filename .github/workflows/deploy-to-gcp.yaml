@@ -32,7 +32,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Use repo files
-        run: git clone --branch production https://github.com/oxyCabhru/brewskie.git
+        run: >
+          git clone --branch production https://github.com/oxyCabhru/brewskie.git tmp;
+          mv tmp/.git .;
+          rm -rf tmp
       - name: Login to Dockerhub
         uses: docker/login-action@v1
         with:
