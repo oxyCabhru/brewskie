@@ -27,6 +27,7 @@
 </script>
 
 <svelte:head>
+  <!-- dynamic page title -->
   <title>
     Brewskie 🤙
     {$selected_brews.casks.length > 0 || $selected_brews.formulae.length > 0
@@ -47,6 +48,12 @@
     src="https://analytics.umami.is/script.js"
     data-website-id="c2564a40-959f-47e3-bb81-296a428a126f"
   ></script>
+  <!-- metadata -->
+  <meta
+    name="description"
+    content="Install apps and packages quickly and easily, powered by Homebrew."
+  />
+  <meta name="robots" content="nofollow, nositelinkssearchbox, nosnippet" />
 </svelte:head>
 
 <div id="container">
