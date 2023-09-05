@@ -30,7 +30,7 @@
       </div>
     {:else}
       <a class="badge badge-outline p-2 opacity-70" href="/browse">
-        More brews
+        Browse popular brews
       </a>
     {/if}
   </div>
