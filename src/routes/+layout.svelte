@@ -30,7 +30,6 @@
   let shared_brewskie: SelectedBrews | undefined;
   async function load_suggestion() {
     let hash = $page.url.searchParams.get("h");
-    console.log("hash", hash);
     if (!hash) return;
     shared_brewskie = (await (
       await fetch(`/query?hash=${hash}`)
