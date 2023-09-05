@@ -7,6 +7,9 @@
   import SelectedPopup from "$lib/cmps/SelectedPopup.svelte";
   import { page, navigating } from "$app/stores";
   import HowTo from "$lib/cmps/HowTo.svelte";
+  import type { SelectedBrews } from "$lib/types";
+  import { onMount } from "svelte";
+  import { slide } from "svelte/transition";
   let breadcrumbs: string[];
   $: breadcrumbs = $page.route.id?.split("/").filter((v) => v != "") || [];
   globalThis.Buffer = Buffer;
@@ -24,9 +27,29 @@
       );
   };
   $: brews = $selected_brews ? parse_brews(false) : parse_brews(true);
+  let shared_brewskie: SelectedBrews | undefined;
+  async function load_suggestion() {
+    let hash = $page.url.searchParams.get("h");
+    console.log("hash", hash);
+    if (!hash) return;
+    shared_brewskie = (await (
+      await fetch(`/query?hash=${hash}`)
+    ).json()) as SelectedBrews;
+    suggestion = true;
+  }
+  const accept_suggestion = () => {
+    if (!shared_brewskie) return;
+    $selected_brews = shared_brewskie;
+    suggestion = false;
+  };
+  let suggestion = false;
+  onMount(async () => {
+    await load_suggestion();
+  });
 </script>
 
 <svelte:head>
+  <!-- dynamic page title -->
   <title>
     Brewskie 🤙
     {$selected_brews.casks.length > 0 || $selected_brews.formulae.length > 0
@@ -47,12 +70,46 @@
     src="https://analytics.umami.is/script.js"
     data-website-id="c2564a40-959f-47e3-bb81-296a428a126f"
   ></script>
+  <!-- metadata -->
+  <meta
+    name="description"
+    content="Install apps and packages quickly and easily, powered by Homebrew."
+  />
+  <meta name="robots" content="nofollow, nositelinkssearchbox, nosnippet" />
 </svelte:head>
 
 <div id="container">
   <div id="overlay" class="content-end lg:content-start">
     {#if $navigating}
       <div class="mt-4 scale-150 loading loading-spinner" />
+    {/if}
+    {#if suggestion}
+      <div transition:slide class="alert alert-info shadow-xl">
+        <div>
+          <h3>Someone has shared a quickstart code with you!</h3>
+          <p>
+            The code was
+            <input
+              readonly
+              class="input input-bordered input-info input-sm"
+              type="text"
+              style="width: calc(8ch * 1.4)"
+              placeholder={$page.url.searchParams.get("h")}
+            />, would you like to load it?
+          </p>
+        </div>
+        <div class="flex flex-col gap-2">
+          <button class="btn btn-primary btn-sm" on:click={accept_suggestion}
+            >Yes</button
+          >
+          <button
+            class="btn btn-sm"
+            on:click={() => {
+              suggestion = false;
+            }}>No</button
+          >
+        </div>
+      </div>
     {/if}
     <SelectedPopup {brews} />
   </div>

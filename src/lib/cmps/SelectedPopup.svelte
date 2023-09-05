@@ -5,7 +5,6 @@
     clear_brews,
     selected_brews,
   } from "$lib/selected_brews";
-  import { onMount } from "svelte";
   import copy from "copy-to-clipboard";
   import { slide } from "svelte/transition";
   export let brews: any[];
