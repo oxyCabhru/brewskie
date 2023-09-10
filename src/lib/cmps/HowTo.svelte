@@ -63,7 +63,7 @@
       expressly make it executable. This is mainly a security measure, and we
       are all grateful for it.
       <a
-        href="https://support.apple.com/en-gb/guide/terminal/apdd100908f-06b3-4e63-8a87-32e71241bab4/mac"
+        href="https://support.apple.com/guide/terminal/apdd100908f-06b3-4e63-8a87-32e71241bab4/mac"
         target="_blank"
         >Please follow Apple's instructions for making a script executable.
         <ion-icon name="link-outline" class="" />
