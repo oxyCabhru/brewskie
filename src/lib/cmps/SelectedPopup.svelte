@@ -62,6 +62,18 @@
     alert.addEventListener("mouseenter", update);
     alert.addEventListener("mouseleave", update);
   }
+  async function share() {
+    const share_data = {
+      title: "Brewskie 🤙",
+      text: "Someone shared their favorite apps with you!",
+      url: "/?h=" + downloaded_hash,
+    };
+    if (navigator.canShare(share_data)) {
+      await navigator.share(share_data);
+    } else {
+      copy(share_data.url);
+    }
+  }
 </script>
 
 {#if success}
@@ -99,8 +111,12 @@
             bind:this={copy_input}
             placeholder={downloaded_hash}
             on:click={copy_to_clipboard}
-          /></span
-        >
+          />
+        </span>
+        <button class="btn btn-sm btn-outline btn-primary" on:click={share}>
+          Share
+          <ion-icon name="share-social-outline" />
+        </button>
       </p>
       <p>
         in the quickstart option that's in the sidebar to restore your
