@@ -18,5 +18,6 @@ export async function save_brewskie(sb: SelectedBrews): Promise<string> {
 */
 export async function fetch_brewskie(hash: string): Promise<string> {
     const data: string = await db.get(hash) || "{casks: [], formulae: []}";
+    console.log(`data for ${hash}: ${data}`);
     return data;
 }
