@@ -1,6 +1,6 @@
 import got from "got";
 import type { Method } from "got";
-import db from '$lib/db.server';
+import cache from '$lib/storage.server';
 import { BrewType } from "$lib/types";
 import { fetch_cask_api, fetch_formula_api, get_latest_cask_installs, get_latest_formula_installs } from "$lib/brew_sh.server.js";
 import { fetch_brewskie } from "$lib/persist_bundles.server.js";

@@ -1,9 +1,9 @@
 import got from 'got';
 import { BrewType, type BrewMetadata, type Installs, type InstallItem } from './types';
-import db from './db.server';
+import { cache } from './storage.server';
 const fmt = Intl.NumberFormat('en', { notation: 'compact' });
 const opts = {
-    cache: db,
+    cache,
     throwHttpErrors: false,
     timeout: { request: 10000 }
 };

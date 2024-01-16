@@ -29,6 +29,7 @@
   "type": "module",
   "dependencies": {
     "@keyv/redis": "^2.7.0",
+    "@vercel/kv": "^1.0.1",
     "buffer": "^6.0.3",
     "copy-to-clipboard": "^3.3.3",
     "crypto-js": "^4.1.1",

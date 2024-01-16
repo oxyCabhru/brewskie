@@ -1,7 +1,6 @@
 import type { SelectedBrews } from "./types";
 import { hash } from "./types";
-import db from "./db.server";
-
+import { db } from "./storage.server";
 
 /**
  * @param sb a snapshot of your selected brews
