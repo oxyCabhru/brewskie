@@ -8,6 +8,7 @@ import { db } from "./storage.server";
  */
 export async function save_brewskie(sb: SelectedBrews): Promise<string> {
     const h = hash(sb);
+    console.log(`saving hash ${h}: ${JSON.stringify(sb)}`)
     await db.set(h, JSON.stringify(sb));
     return h;
 };
@@ -17,7 +18,7 @@ export async function save_brewskie(sb: SelectedBrews): Promise<string> {
  * @returns JSON.stringify() version of the selected brews
 */
 export async function fetch_brewskie(hash: string): Promise<string> {
-    const data: string = await db.get(hash) || "{casks: [], formulae: []}";
+    const data: string = JSON.stringify(await db.get(hash)) || "{casks: [], formulae: []}";
     console.log(`data for ${hash}: ${data}`);
     return data;
 }
